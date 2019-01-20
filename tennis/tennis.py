@@ -51,28 +51,63 @@ class Court(object):
 
 # class engine
 class Engine(object):
-    pass
 
-def name_input(question):
+    def __init__(self, p1, p2, quadra):
+        self.player1 = Player(p1)
+        self.player2 = Player(p2)
+        self.court = Court(quadra)
+        self.log = "log.txt"
+
+    def simple_match(self):
+        # I don't think there's a need to assign it to a variable here...
+        self.player1.court_impact(self.court)
+        self.player2.court_impact(self.court)
+
+        p1_wins = 0
+        p2_wins = 0
+        
+        for i in range(1, 1001):
+            simul = randint(1, 2)
+            if simul == 1:
+                p1_wins += 1
+                with open(self.log, "a+") as f:
+                    f.write(f"Jogo {i}: {self.player1.name} wins!\n")
+            elif simul == 2:
+                p2_wins += 1
+                with open(self.log, "a+") as f:
+                    f.write(f"Jogo {i}: {self.player2.name} wins!\n")
+            else:
+                with open(self.log, "a+") as f:
+                    f.write("Oh oh, erro")
+                    exit(0)
+        
+        with open(self.log, "a+") as f:
+            f.write(dedent(f"""
+            {self.player1.name} wins: {p1_wins}
+            {self.player2.name} wins: {p2_wins}"""))
+
+def player_input(question):
     print(question)
     name = input("> ").lower()
     name = "".join(x for x in Player.pool.keys() if name in x.lower())
 
     while name not in list(Player.pool.keys()):
-        name = name_input(f"Pick one from the following: {list(Player.pool.keys())}")
+        name = player_input(f"Pick one from the following: {list(Player.pool.keys())}")
         
     return name
 
-nome = name_input("Escolha")
-jogador1 = Player(nome)
-quadra = Court("wimbledon")
-# teste inicio
-print(jogador1.name)
-print(quadra.name, quadra.impact_stamina, quadra.impact_technique, quadra.impact_spin)
-jogador1.court_impact(quadra)
-print(jogador1.pool[nome])
-print(jogador1.name, jogador1.stamina, jogador1.technique, jogador1.spin)
-# teste fim
+nome1 = player_input("Escolha o jogador")
+nome2 = player_input("Escolha o jogador")
+teste = Engine(nome1, nome2, "wimbledon")
+teste.simple_match()
+## teste inicio
+# print(jogador.name)
+# print(quadra.name, quadra.impact_stamina, quadra.impact_technique, quadra.impact_spin)
+# jogador.court_impact(quadra)
+# print(jogador.pool[nome])
+# print(jogador.name, jogador.stamina, jogador.technique, jogador.spin)
+## teste fim
+
 
 # simular vários campeonatos e salvar todos num txt para teste
 # atributos de 1 a 10, que impactam a chance de ter um power ou weak move
