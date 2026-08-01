@@ -26,8 +26,9 @@ from dataclasses import dataclass, field
 import anthropic
 
 from config import Config
-from agent import prompts, tools
+from agent import errors, prompts, tools
 from agent.tools import DealEntry, GoogleClients, TermRow
+from agent.usage import UsageTracker
 
 # Status possíveis de um deal no relatório final.
 STATUS_PROCESSED = "processado"
@@ -48,13 +49,18 @@ class DealResult:
     review_flags: int = 0
     files_processed: list = field(default_factory=list)
     files_not_classified: list = field(default_factory=list)
+    # ErrorInfo por arquivo que falhou (ver agent/errors.py)
     errors: list = field(default_factory=list)
+    # ErrorInfo quando o deal inteiro falhou antes de chegar aos arquivos
+    error_info: object = None
 
 
 @dataclass
 class BatchSummary:
     deals: list = field(default_factory=list)
     aborted: str = ""
+    stopped: str = ""
+    usage: UsageTracker = field(default_factory=UsageTracker)
 
     def add(self, result: DealResult) -> DealResult:
         self.deals.append(result)
@@ -71,6 +77,15 @@ class BatchSummary:
     def review_flags(self) -> int:
         return sum(d.review_flags for d in self.deals)
 
+    def all_errors(self) -> list:
+        """Todos os ErrorInfo do lote, para o resumo agrupado por causa."""
+        infos = []
+        for deal in self.deals:
+            infos.extend(deal.errors)
+            if deal.error_info is not None:
+                infos.append(deal.error_info)
+        return infos
+
 
 def _chunks(items: list, size: int) -> list:
     return [items[i:i + size] for i in range(0, len(items), size)]
@@ -86,6 +101,7 @@ class ExtractionLoop:
         self.claude = claude or anthropic.Anthropic(
             api_key=config.anthropic_api_key, max_retries=8
         )
+        self.usage = UsageTracker()
 
     # -- chamadas ao modelo -------------------------------------------------
 
@@ -100,8 +116,14 @@ class ExtractionLoop:
                 "cache_control": {"type": "ephemeral"},
             }],
             messages=[{"role": "user", "content": content_blocks}],
-            output_config={"format": {"type": "json_schema", "schema": schema}},
+            output_config={
+                "format": {"type": "json_schema", "schema": schema},
+                # Padrão "medium" (o da API é "high") — output custa 5x o
+                # input e inclui thinking. REVERTER: CLAUDE_EFFORT=high.
+                "effort": self.config.effort,
+            },
         )
+        self.usage.record(getattr(response, "usage", None))
         if response.stop_reason == "refusal":
             raise tools.ToolError(
                 "O modelo recusou a solicitação (stop_reason=refusal). "
@@ -124,10 +146,36 @@ class ExtractionLoop:
             "cache_control": {"type": "ephemeral"},
         }
 
+    @staticmethod
+    def classify_excerpt(document_text: str, limit: int) -> str:
+        """Trecho do documento usado na CLASSIFICAÇÃO.
+
+        Manda início + fim, não o texto inteiro: o tipo do documento aparece
+        nas primeiras páginas (título, preâmbulo, definições) e a página de
+        assinaturas — necessária para detectar versão não-final — está no
+        fim. O miolo não ajuda a classificar e custa caro (é a parte do
+        prompt que NÃO vai cacheada).
+
+        `limit=0` desliga o corte e manda o documento completo.
+        REVERTER: CLASSIFY_CHAR_LIMIT=0 no .env.
+        """
+        if limit <= 0 or len(document_text) <= limit:
+            return document_text
+        head = int(limit * 0.7)
+        tail = limit - head
+        return (
+            f"{document_text[:head]}\n\n"
+            f"[... miolo do documento omitido para a etapa de classificação "
+            f"({len(document_text) - limit} caracteres) ...]\n\n"
+            f"{document_text[-tail:]}"
+        )
+
     def classify(self, file_name: str, document_text: str) -> dict:
         instructions = prompts.CLASSIFY_INSTRUCTIONS.format(
             file_name=file_name,
-            document_text=document_text,
+            document_text=self.classify_excerpt(
+                document_text, self.config.classify_char_limit
+            ),
         )
         return self._call_claude(
             [{"type": "text", "text": instructions}],
@@ -340,18 +388,25 @@ class ExtractionLoop:
             except (tools.TabWriteNotAllowedError, tools.SheetsWritePermissionError):
                 # Erro sistêmico de permissão: falharia em todo deal.
                 raise
-            except Exception as exc:  # noqa: BLE001 — registrado, não silenciado
-                result.errors.append(f"{file.get('name', file.get('id'))}: {exc}")
+            except Exception as exc:  # noqa: BLE001 — classificado, não silenciado
+                info = errors.classify_error(exc)
+                info.message = f"{file.get('name', file.get('id'))}: {info.message}"
+                result.errors.append(info)
 
         if result.errors:
             result.status = STATUS_FAILED
-            result.detail = f"{len(result.errors)} arquivo(s) com erro."
+            transient = sum(1 for e in result.errors if e.retryable)
+            result.detail = (
+                f"{len(result.errors)} arquivo(s) com erro "
+                f"({transient} transitório(s), "
+                f"{len(result.errors) - transient} exige(m) ação)."
+            )
         return result
 
     # -- lote ---------------------------------------------------------------
 
     def run_batch(self, force: bool = False, only: str = "",
-                  on_start=None, on_result=None) -> BatchSummary:
+                  on_start=None, on_result=None, checkpoint=None) -> BatchSummary:
         """Processa os deals da aba `Deals`.
 
         `force=True` ignora a idempotência e reprocessa tudo.
@@ -376,19 +431,31 @@ class ExtractionLoop:
             else tools.list_processed_companies(self.clients, self.config)
         )
 
-        for deal in deals:
+        for index, deal in enumerate(deals, start=1):
             try:
                 result = summary.add(self._run_one(deal, processed))
             except (tools.TabWriteNotAllowedError, tools.SheetsWritePermissionError) as exc:
                 # Sistêmico: abortar o lote inteiro em vez de repetir o erro
                 # 50 vezes.
+                info = errors.classify_error(exc)
                 summary.aborted = (
-                    f"Lote interrompido em {deal.company!r} por erro de permissão "
-                    f"de escrita: {exc}"
+                    f"Lote interrompido em {deal.company!r}: {info}"
                 )
                 return summary
             if on_result:
                 on_result(result)
+
+            if checkpoint is not None and checkpoint.enabled:
+                reason = checkpoint.reason_to_pause(index, self.usage)
+                if reason and not checkpoint.review(
+                    index, len(deals), self.usage, reason
+                ):
+                    summary.stopped = (
+                        f"Interrompido por você no checkpoint após {index} de "
+                        f"{len(deals)} deal(s). Rode de novo para continuar de "
+                        "onde parou."
+                    )
+                    return summary
         return summary
 
     def _run_one(self, deal: DealEntry, processed: dict) -> DealResult:
@@ -416,6 +483,10 @@ class ExtractionLoop:
         except (tools.TabWriteNotAllowedError, tools.SheetsWritePermissionError):
             raise
         except Exception as exc:  # noqa: BLE001 — o lote continua, o deal é reportado
+            info = errors.classify_error(exc)
             return DealResult(
-                company=deal.company, status=STATUS_FAILED, detail=str(exc)
+                company=deal.company,
+                status=STATUS_FAILED,
+                detail=str(info),
+                error_info=info,
             )

@@ -30,11 +30,16 @@ extraction_agent/
     loop.py             # loop principal, modo lote, idempotência
     tools.py            # ferramentas (Drive, Sheets, Deals, write_drafts)
     prompts.py          # prompts + schemas JSON de cada etapa
+    errors.py           # classificação de erros por origem e natureza
+    usage.py            # contagem de tokens e estimativa de custo
+    checkpoint.py       # pausa interativa via /dev/tty
   config.py             # leitura de variáveis de ambiente
   tests/
     test_permissions.py # escrita restrita à aba Pendente
     test_tools.py       # not_found explícito, citação obrigatória etc.
     test_batch.py       # aba Deals, idempotência, cobertura, escrita em lote
+    test_errors.py      # classificação de erros
+    test_checkpoint.py  # checkpoint, custo, recorte da classificação
   requirements.txt
   .env.example
 ```
@@ -57,9 +62,71 @@ cp .env.example .env   # e preencha (ver abaixo)
 | `GOOGLE_READER_CREDENTIALS_FILE` | JSON da service account de **leitura** |
 | `GOOGLE_WRITER_CREDENTIALS_FILE` | JSON da service account de **escrita** (separada) |
 | `SPREADSHEET_ID` | ID da planilha (trecho entre `/d/` e `/edit` na URL) |
+| **`CLAUDE_EFFORT`** | **Otimização de custo — ver seção abaixo.** Padrão `medium` |
+| **`CLASSIFY_CHAR_LIMIT`** | **Otimização de custo — ver seção abaixo.** Padrão `12000` |
 | `CATEGORY_BATCH_SIZE` | Opcional; padrão `5`. Ver "Processamento em lote" |
+| `PAUSE_EVERY_DEALS` | Opcional; padrão `0` (desligado). Ver "Checkpoint interativo" |
+| `BUDGET_USD` | Opcional; padrão `0` (sem orçamento) |
+| `BUDGET_WARN_PCT` | Opcional; padrão `80` |
+| `CHECKPOINT_SEM_TERMINAL` | Opcional; `parar` (padrão) ou `continuar` |
+| `PRICE_INPUT_PER_MTOK` / `PRICE_OUTPUT_PER_MTOK` | Preços para a estimativa; padrão `5.0` / `25.0` |
 | `DEALS_COMPANY_COLUMN` | Opcional; padrão `Empresa` |
 | `DEALS_FOLDER_COLUMN` | Opcional; padrão `Pasta_Documentos_Assinados` |
+
+## ⚠️ Otimizações de custo e como revertê-las
+
+Duas escolhas do projeto trocam um pouco de profundidade por bastante
+economia. **Cada uma se desfaz mudando UMA variável no `.env`** — nenhuma
+alteração de código é necessária. Se no teste real a qualidade não
+convencer, reverta e rode de novo.
+
+### [1] `CLAUDE_EFFORT` — profundidade de raciocínio
+
+| | |
+|---|---|
+| **Padrão da API do Claude** | `high` |
+| **Padrão deste projeto** | `medium` |
+| **Como reverter** | `CLAUDE_EFFORT=high` no `.env` |
+| **Onde age** | `agent/loop.py`, em `_call_claude` → `output_config.effort` |
+
+**Por quê:** os tokens de *output* custam 5x os de *input*, e o raciocínio
+(thinking) é cobrado como output. Numa extração típica, o output responde
+por mais da metade do custo. Baixar de `high` para `medium` corta uma fatia
+significativa da conta e do tempo.
+
+**O risco:** menos deliberação por termo. Em cláusulas de redação incomum,
+`medium` pode produzir citações menos precisas ou marcar `review` com mais
+frequência. Aceita `low`, `medium`, `high`, `xhigh`, `max`.
+
+**Como avaliar:** rode um deal com cada valor e compare as colunas
+`secao_fonte` e `nota_comparacao` das linhas geradas.
+
+### [2] `CLASSIFY_CHAR_LIMIT` — recorte na etapa de classificação
+
+| | |
+|---|---|
+| **Comportamento original** | documento inteiro na classificação |
+| **Padrão deste projeto** | `12000` caracteres (início + fim) |
+| **Como reverter** | `CLASSIFY_CHAR_LIMIT=0` no `.env` |
+| **Onde age** | `agent/loop.py`, em `classify_excerpt()` |
+
+**Por quê:** a classificação só precisa responder "que documento é este?" e
+"parece a versão final assinada?". A primeira resposta está nas primeiras
+páginas (título, preâmbulo, definições); a segunda está no fim (bloco de
+assinaturas). O miolo não ajuda — e é justamente a parte do prompt que
+**não** vai cacheada, então é paga a preço cheio em todo documento.
+
+**Como funciona:** manda os primeiros ~70% do limite e os últimos ~30%,
+com um marcador explícito no lugar do miolo. O prompt avisa o modelo que o
+corte é intencional, para ele não confundir isso com documento incompleto.
+
+**Importante:** isso afeta **apenas a classificação**. A extração dos
+termos sempre recebe o documento completo — nenhuma cláusula deixa de ser
+procurada por causa desta variável.
+
+**O risco:** um documento cujo tipo só fica claro no meio seria mal
+classificado. Se você vir muitos `not_classified` inesperados no relatório,
+suba o limite (ex.: `30000`) ou zere para voltar ao original.
 
 ### Credenciais Google (duas service accounts)
 
@@ -164,6 +231,9 @@ python main.py --empresa "Acme Ltda" --pasta "https://drive.google.com/drive/fol
 
 # Reprocessar mesmo quem já tem linhas em Pendente/Publicado
 python main.py --todos --reprocessar
+
+# Parar e perguntar a cada 10 deals, ou ao passar de 80% de US$ 100
+python main.py --todos --pausar-a-cada 10 --orcamento-usd 100
 ```
 
 A saída mostra o progresso deal a deal enquanto roda, e um resumo no fim:
@@ -178,6 +248,85 @@ A saída mostra o progresso deal a deal enquanto roda, e um resumo no fim:
 
 Código de saída: `0` tudo certo, `1` algum deal com erro/inválido, `2` lote
 interrompido ou erro de configuração.
+
+### Checkpoint interativo
+
+Para um lote longo, dá para pedir confirmação de tempos em tempos. Dispara
+**pelo que vier primeiro**: a contagem de deals ou a porcentagem do
+orçamento.
+
+```bash
+python main.py --todos --pausar-a-cada 10 --orcamento-usd 100
+```
+
+```
+============================================================
+CHECKPOINT — 10 de 50 deals avaliados
+============================================================
+  Chamadas ao modelo    : 210
+  Tokens entrada/saída  : 12.5M / 3.4M
+    (leitura de cache   : 9.5M, cobrada a 10%)
+  Custo estimado        : $31.40
+  Orçamento             : $100.00 (31% consumido)
+  Faltam                : 40 deal(s)
+  Projeção até o fim    : $157.00
+
+  MOTIVO: 10 deal(s) desde o último checkpoint.
+
+  Parar agora é seguro: o que já foi escrito fica em `Pendente` e
+  não será reprocessado quando você rodar de novo (idempotência).
+  Continuar? [s/N]
+```
+
+**Você pode redirecionar a saída e ainda assim responder.** A pergunta é
+escrita e lida direto em `/dev/tty`, não em stdout — então ela aparece no
+seu terminal enquanto o log fica limpo:
+
+```bash
+python main.py --todos --pausar-a-cada 10 > run.log 2>&1
+```
+
+Só quando não existe terminal nenhum (`nohup`, cron) é que entra o
+comportamento de `CHECKPOINT_SEM_TERMINAL`: `parar` (padrão, seguro — você
+retoma depois e a idempotência não reprocessa nada) ou `continuar`.
+
+**Sobre o orçamento:** o número é uma **estimativa calculada localmente**
+contra um teto que você declara. A API do Claude não informa saldo nem
+limite de gasto — o que ela devolve em cada resposta é quantos tokens
+aquela chamada consumiu. O cálculo precifica os quatro baldes
+separadamente (input normal, escrita de cache a 1,25x, leitura de cache a
+0,1x e output), porque tratar tudo a preço cheio superestimaria bastante.
+
+O aviso de orçamento dispara em `BUDGET_WARN_PCT` e mais uma vez em 100%;
+depois desarma, para não perguntar a cada deal. A contagem de deals
+continua valendo e segue mostrando o custo acumulado.
+
+### Quando algo falha
+
+As falhas são classificadas por **origem** (Claude, Google Drive, Google
+Sheets, Documento, Agente) e por **natureza** — e o resumo final separa o
+que adianta re-rodar do que exige uma correção sua:
+
+```
+--- Falhas por causa ---
+
+TRANSITÓRIAS (3) — rodar de novo tem chance de resolver, e a idempotência
+não reprocessa o que já entrou:
+  • Claude (3x)
+    Rate limit da API do Claude. O SDK já tentou novamente; rode o lote de
+    novo mais tarde — a idempotência não reprocessa o que já entrou.
+      - spa_assinado.pdf: rate limited
+
+EXIGEM AÇÃO (1) — rodar de novo dá o mesmo erro:
+  • Google Drive (1x)
+    → A service account de LEITURA não tem acesso a esta pasta.
+      Compartilhe a pasta do deal no Drive com o e-mail da reader-sa
+      como Leitor.
+      - HTTP 403
+```
+
+Erro não reconhecido é tratado como "exige ação" de propósito — para não
+induzir você a re-rodar um lote de horas sem investigar.
 
 ### Idempotência
 
@@ -252,6 +401,13 @@ Cobrem, entre outros:
 - Um deal com erro não interrompe o lote; erro de permissão interrompe.
 - Categoria omitida pelo modelo vira `not_found` marcado para revisão.
 - Dicionário vazio falha alto em vez de escrever zero linhas em silêncio.
+- Erros são classificados por origem e por natureza (transitório vs. exige
+  ação); erro desconhecido cai em "exige ação" por segurança.
+- Checkpoint dispara pela contagem ou pelo orçamento, o que vier primeiro;
+  resposta vazia para o lote; sem terminal, para por padrão.
+- Cache é precificado abaixo do input normal na estimativa de custo.
+- O recorte da classificação preserva início **e** fim do documento (a
+  página de assinaturas está no fim) e some com `CLASSIFY_CHAR_LIMIT=0`.
 
 Os testes usam fakes locais — não tocam a rede nem exigem credenciais.
 

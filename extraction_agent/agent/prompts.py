@@ -58,6 +58,13 @@ Tarefas:
    branco a preencher. Liste cada indício encontrado (o nome do arquivo já
    foi verificado separadamente pelo código).
 
+ATENÇÃO: para esta etapa você pode receber apenas o INÍCIO e o FIM do
+documento, com o miolo omitido e marcado como tal. Isso é intencional e
+não é um defeito do documento — NÃO liste o corte como indício de versão
+não-final. O início traz o tipo do documento e o fim traz o bloco de
+assinaturas, que é o que esta etapa precisa. A extração dos termos usa o
+texto completo, em outra chamada.
+
 Nome do arquivo: {file_name}
 
 Texto do documento:
