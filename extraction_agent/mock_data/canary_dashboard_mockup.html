@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canary — Deal Terms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14202B;
+    --ink-soft:#28414F;
+    --paper:#F7F5F0;
+    --paper-raised:#FFFFFF;
+    --canary:#E8B923;
+    --canary-soft:#FBEBB8;
+    --slate:#5C6B73;
+    --slate-light:#8B9AA1;
+    --line:#DED8C9;
+    --rust:#B4472B;
+    --rust-soft:#F3DED6;
+    --forest:#3C6E52;
+    --forest-soft:#DCE9E0;
+    --serif: 'Source Serif 4', serif;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  a{color:inherit;}
+
+  /* ===== TOP BAR ===== */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 14px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: 3px solid var(--canary);
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--serif); font-weight:600; font-size:19px; letter-spacing:0.2px;
+  }
+  .brand .mark{
+    width:22px; height:22px; border-radius:3px;
+    background: var(--canary);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--sans); font-weight:700; font-size:12px; color: var(--ink);
+  }
+  .brand small{
+    font-family: var(--sans); font-weight:400; font-size:12px; color: var(--slate-light);
+    margin-left:8px;
+  }
+  .tabs{ display:flex; gap:4px; }
+  .tab-btn{
+    font-family: var(--sans); font-size:13px; font-weight:500;
+    color: var(--slate-light); background:transparent; border:none;
+    padding:8px 16px; border-radius:6px; cursor:pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .tab-btn:hover{ background: rgba(255,255,255,0.06); color: var(--paper); }
+  .tab-btn.active{ background: rgba(232,185,35,0.14); color: var(--canary); }
+  .tab-btn:focus-visible{ outline:2px solid var(--canary); outline-offset:2px; }
+
+  .view{ display:none; animation: fadein 0.25s ease; }
+  .view.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ===================================================== */
+  /* VIEW 1 — DASHBOARD                                      */
+  /* ===================================================== */
+  .dash-layout{ display:grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 58px); }
+
+  .filter-rail{
+    background: var(--paper-raised);
+    border-right: 1px solid var(--line);
+    padding: 24px 18px;
+  }
+  .filter-rail h4{
+    font-family:var(--sans); font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+    color: var(--slate); font-weight:600; margin: 20px 0 10px;
+  }
+  .filter-rail h4:first-child{ margin-top:0; }
+  .filter-opt{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:13.5px; color: var(--ink-soft); padding:6px 8px; border-radius:5px;
+    cursor:pointer; margin-bottom:2px;
+  }
+  .filter-opt:hover{ background: var(--paper); }
+  .filter-opt.sel{ background: var(--canary-soft); color:var(--ink); font-weight:600; }
+  .filter-opt span.count{ color: var(--slate-light); font-family:var(--mono); font-size:11.5px; }
+  .filter-opt.sel span.count{ color: var(--ink); }
+
+  .dash-main{ padding: 28px 32px; }
+  .dash-head{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:22px; }
+  .dash-head h1{ font-family:var(--serif); font-size:28px; font-weight:600; }
+  .dash-head p{ color:var(--slate); font-size:13.5px; margin-top:4px; }
+  .search-box{
+    display:flex; align-items:center; gap:8px;
+    background: var(--paper-raised); border:1px solid var(--line); border-radius:8px;
+    padding:9px 14px; width:340px; font-size:13.5px; color:var(--slate);
+  }
+  .search-box svg{ flex-shrink:0; opacity:0.5; }
+  .search-box input{ border:none; outline:none; background:transparent; width:100%; font-family:var(--sans); font-size:13.5px; }
+
+  .deal-table{ width:100%; border-collapse:collapse; background: var(--paper-raised); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .deal-table thead th{
+    text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
+    color: var(--slate); font-weight:600; padding:12px 16px; border-bottom:1px solid var(--line);
+    background: #FBFAF7;
+  }
+  .deal-table tbody td{ padding:14px 16px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle; }
+  .deal-table tbody tr:last-child td{ border-bottom:none; }
+  .deal-table tbody tr{ cursor:pointer; transition: background 0.12s; }
+  .deal-table tbody tr:hover{ background: #FCFAF3; }
+  .co-name{ font-weight:600; font-family:var(--serif); font-size:14.5px; }
+  .co-sub{ color:var(--slate-light); font-size:11.5px; margin-top:1px; }
+  .pill{
+    display:inline-block; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:600;
+    font-family:var(--sans);
+  }
+  .pill.safe{ background:#E4E9F2; color:#2E4670; }
+  .pill.priced{ background: var(--forest-soft); color: var(--forest); }
+  .pill.secondary{ background:#EFE3F3; color:#6B3D82; }
+  .pill.exit{ background: var(--canary-soft); color:#8A6408; }
+  .num{ font-family: var(--mono); font-size:12.5px; }
+  .flag-dot{ width:7px; height:7px; border-radius:50%; display:inline-block; margin-right:6px; }
+  .flag-dot.ok{ background: var(--forest); }
+  .flag-dot.review{ background: var(--rust); }
+
+  /* ===================================================== */
+  /* VIEW 2 — DEAL DETAIL                                     */
+  /* ===================================================== */
+  .detail-layout{ display:grid; grid-template-columns: 1fr 380px; min-height: calc(100vh - 58px); transition: grid-template-columns 0.25s ease; }
+  .detail-layout.drawer-open{ grid-template-columns: 1fr 380px; }
+  .detail-main{ padding: 30px 40px; max-width:900px; }
+  .breadcrumb{ font-size:12px; color:var(--slate); margin-bottom:14px; }
+  .breadcrumb b{ color:var(--ink); }
+  .detail-head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; }
+  .detail-head h1{ font-family:var(--serif); font-size:30px; font-weight:600; }
+  .detail-meta{ display:flex; gap:18px; margin:10px 0 26px; flex-wrap:wrap; }
+  .meta-chip{ font-size:12.5px; color:var(--slate); }
+  .meta-chip b{ color:var(--ink); font-weight:600; }
+
+  .term-group{ margin-bottom:8px; }
+  .term-group-title{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;
+    color: var(--slate); margin: 26px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--line);
+  }
+  .term-row{
+    display:grid; grid-template-columns: 200px 1fr 28px;
+    gap: 18px; padding: 13px 4px; border-bottom:1px solid var(--line);
+    cursor:pointer; border-radius:6px; align-items:start;
+  }
+  .term-row:hover{ background: rgba(232,185,35,0.08); }
+  .term-row.active-row{ background: var(--canary-soft); }
+  .term-name{ font-weight:600; font-size:13.5px; padding-top:1px; }
+  .term-value{ font-size:13.5px; color: var(--ink-soft); line-height:1.5; }
+  .term-value .val{ font-family:var(--mono); font-size:12px; color:var(--ink); background:#EFEBDF; padding:1px 6px; border-radius:4px; margin-right:6px; }
+  .term-arrow{ color: var(--slate-light); text-align:right; padding-top:2px; }
+
+  /* citation drawer */
+  .drawer{
+    background: var(--ink); color: var(--paper);
+    padding: 26px 26px 26px; border-left: 3px solid var(--canary);
+    position:sticky; top:0; height:calc(100vh - 58px); overflow-y:auto;
+  }
+  .drawer-empty{ display:flex; flex-direction:column; align-items:center; justify-content:center; height:70%; text-align:center; color: var(--slate-light); }
+  .drawer-empty svg{ opacity:0.35; margin-bottom:14px; }
+  .drawer-empty p{ font-size:13px; max-width:220px; line-height:1.5; }
+  .drawer-eyebrow{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.1em; color:var(--canary); font-weight:600; margin-bottom:8px; }
+  .drawer h3{ font-family:var(--serif); font-size:19px; margin-bottom:4px; }
+  .drawer .doc-name{ font-size:12px; color: var(--slate-light); margin-bottom:20px; font-family:var(--mono); }
+  .drawer-block{ margin-bottom:22px; }
+  .drawer-block h5{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em; color:var(--slate-light); margin-bottom:8px; font-weight:600; }
+  .plain-text{ font-size:13.5px; line-height:1.6; color:#E7E4DA; }
+  .source-quote{
+    font-family: var(--mono); font-size:12px; line-height:1.7; color:#C9D6DC;
+    background: rgba(255,255,255,0.05); border-left:2px solid var(--canary);
+    padding: 12px 14px; border-radius: 0 6px 6px 0;
+  }
+  .source-quote .hl{ background: rgba(232,185,35,0.28); color:#FBEBB8; padding:0 2px; border-radius:2px; }
+  .drawer-actions{ display:flex; gap:8px; margin-top:22px; }
+  .btn-drawer{ font-family:var(--sans); font-size:12px; font-weight:600; padding:8px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.16); background:transparent; color:var(--paper); cursor:pointer; }
+  .btn-drawer:hover{ background: rgba(255,255,255,0.08); }
+  .btn-drawer.primary{ background: var(--canary); color: var(--ink); border-color:var(--canary); }
+  .btn-drawer.primary:hover{ background:#f1c545; }
+
+  /* ===================================================== */
+  /* VIEW 3 — REVIEW QUEUE                                    */
+  /* ===================================================== */
+  .review-main{ padding: 30px 40px; max-width: 980px; margin:0 auto; }
+  .review-head{ margin-bottom: 22px; }
+  .review-head h1{ font-family:var(--serif); font-size:27px; font-weight:600; }
+  .review-head p{ color:var(--slate); font-size:13.5px; margin-top:5px; max-width:560px; line-height:1.5; }
+
+  .upload-card{
+    background: var(--paper-raised); border:1px dashed var(--slate-light); border-radius:12px;
+    padding: 20px 24px; display:flex; align-items:center; gap:16px; margin-bottom:30px;
+  }
+  .upload-card .ic{ width:38px; height:38px; border-radius:8px; background:var(--canary-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .upload-card .txt b{ font-size:13.5px; }
+  .upload-card .txt p{ font-size:12px; color:var(--slate); margin-top:2px; }
+  .upload-card input[type=text]{
+    margin-left:auto; font-family:var(--mono); font-size:12px; border:1px solid var(--line);
+    border-radius:6px; padding:8px 10px; width:230px; color:var(--slate);
+  }
+  .btn-run{ background: var(--ink); color:var(--paper); border:none; padding:9px 16px; border-radius:7px; font-size:12.5px; font-weight:600; cursor:pointer; }
+
+  .review-card{
+    background: var(--paper-raised); border:1px solid var(--line); border-radius:10px;
+    padding: 16px 20px; margin-bottom:12px;
+  }
+  .review-card-head{ display:flex; justify-content:space-between; align-items:center; }
+  .review-card-head .left{ display:flex; align-items:center; gap:10px; }
+  .conf-badge{ font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:0.04em; }
+  .conf-badge.high{ background:var(--forest-soft); color:var(--forest); }
+  .conf-badge.review{ background:var(--rust-soft); color:var(--rust); }
+  .review-term{ font-weight:600; font-size:14px; }
+  .review-cat{ font-size:11.5px; color:var(--slate-light); }
+
+  .review-body{ margin-top:12px; display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+  .review-col h6{ font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--slate-light); font-weight:700; margin-bottom:6px; }
+  .review-col .extracted{ font-size:13px; line-height:1.5; }
+  .review-col .cite{ font-family:var(--mono); font-size:11.5px; color:var(--slate); margin-top:6px; }
+  .review-col textarea{
+    width:100%; font-family:var(--sans); font-size:13px; border:1px solid var(--line); border-radius:6px;
+    padding:8px 10px; resize:vertical; min-height:44px; color:var(--ink);
+  }
+
+  .review-flag-msg{
+    font-size:12px; color: var(--rust); background: var(--rust-soft); padding:8px 10px; border-radius:6px;
+    margin-top:10px; display:flex; gap:6px; align-items:flex-start;
+  }
+
+  .review-actions{ display:flex; gap:8px; margin-top:14px; justify-content:flex-end; }
+  .btn-sm{ font-size:12px; font-weight:600; padding:7px 13px; border-radius:6px; cursor:pointer; border:1px solid var(--line); background:var(--paper-raised); }
+  .btn-sm.approve{ background: var(--forest); color:#fff; border-color:var(--forest); }
+  .btn-sm.approve:hover{ background:#345f47; }
+  .btn-sm.edit:hover{ background:var(--paper); }
+
+  .summary-bar{
+    position:sticky; bottom:0; background:var(--ink); color:var(--paper); border-radius:10px;
+    padding:14px 20px; display:flex; justify-content:space-between; align-items:center; margin-top:20px;
+    border-top:3px solid var(--canary);
+  }
+  .summary-bar .stat{ font-size:12.5px; color:var(--slate-light); }
+  .summary-bar .stat b{ color:var(--paper); font-family:var(--mono); }
+  .btn-approve-all{ background:var(--canary); color:var(--ink); border:none; padding:10px 18px; border-radius:7px; font-weight:700; font-size:13px; cursor:pointer; }
+
+  @media (max-width: 880px){
+    .dash-layout, .detail-layout{ grid-template-columns: 1fr; }
+    .filter-rail{ display:none; }
+    .drawer{ position:relative; height:auto; }
+    .review-body{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><div class="mark">C</div>Canary <small>Deal Terms</small></div>
+  <div class="tabs">
+    <button class="tab-btn active" data-view="dashboard">Dashboard</button>
+    <button class="tab-btn" data-view="detail">Deal · Cascadia Biotics</button>
+    <button class="tab-btn" data-view="review">Fila de Revisão</button>
+  </div>
+</div>
+
+<!-- ============ VIEW 1: DASHBOARD ============ -->
+<div class="view active" id="view-dashboard">
+  <div class="dash-layout">
+    <aside class="filter-rail">
+      <h4>GP / Lead</h4>
+      <div class="filter-opt sel">Todos <span class="count">6</span></div>
+      <div class="filter-opt">Ridgeline Capital <span class="count">2</span></div>
+      <div class="filter-opt">Halcyon Growth <span class="count">1</span></div>
+      <div class="filter-opt">Meridian Seed Fund <span class="count">1</span></div>
+
+      <h4>Tipo</h4>
+      <div class="filter-opt">SAFE <span class="count">2</span></div>
+      <div class="filter-opt">Rodada Precificada <span class="count">2</span></div>
+      <div class="filter-opt">Secundário <span class="count">1</span></div>
+      <div class="filter-opt">Exit / M&A <span class="count">1</span></div>
+
+      <h4>Vintage</h4>
+      <div class="filter-opt">2025 <span class="count">2</span></div>
+      <div class="filter-opt">2026 <span class="count">3</span></div>
+      <div class="filter-opt">2027 <span class="count">1</span></div>
+
+      <h4>Tamanho</h4>
+      <div class="filter-opt">&lt; $1M</div>
+      <div class="filter-opt">$1M – $10M</div>
+      <div class="filter-opt">$10M+</div>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-head">
+        <div>
+          <h1>Deals</h1>
+          <p>23 documentos revisados · 6 packages · atualizado há 2 dias</p>
+        </div>
+        <div class="search-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input placeholder="Pergunte algo: 'quais deals têm MFN?'" />
+        </div>
+      </div>
+
+      <table class="deal-table">
+        <thead>
+          <tr><th>Empresa</th><th>Tipo</th><th>Data</th><th>Investimento</th><th>Valuation</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr onclick="showView('detail')">
+            <td><div class="co-name">Cascadia Biotics</div><div class="co-sub">Series A · Halcyon Growth Partners</div></td>
+            <td><span class="pill priced">Priced Round</span></td>
+            <td class="num">06 Out 2026</td>
+            <td class="num">$12,000,000</td>
+            <td class="num">$40M pre</td>
+            <td><span class="flag-dot ok"></span>Revisado</td>
+          </tr>
+          <tr onclick="showView('detail')">
+            <td><div class="co-name">Cascadia Biotics</div><div class="co-sub">Seed · Ridgeline Capital Partners</div></td>
+            <td><span class="pill priced">Priced Round</span></td>
+            <td class="num">12 Jan 2026</td>
+            <td class="num">$3,000,000</td>
+            <td class="num">$12M pre</td>
+            <td><span class="flag-dot ok"></span>Revisado</td>
+          </tr>
+          <tr onclick="showView('review')">
+            <td><div class="co-name">Ferrum Health</div><div class="co-sub">Exit · Atlas MedTech Holdings</div></td>
+            <td><span class="pill exit">Exit / M&A</span></td>
+            <td class="num">03 Mar 2027</td>
+            <td class="num">$142,000,000</td>
+            <td class="num">—</td>
+            <td><span class="flag-dot review"></span>2 pend.</td>
+          </tr>
+          <tr onclick="showView('detail')">
+            <td><div class="co-name">Vantage Robotics</div><div class="co-sub">Secundário · Longbow Secondary Opp.</div></td>
+            <td><span class="pill secondary">Secundário</span></td>
+            <td class="num">20 Mai 2026</td>
+            <td class="num">$1,800,000</td>
+            <td class="num">$95M implied</td>
+            <td><span class="flag-dot ok"></span>Revisado</td>
+          </tr>
+          <tr onclick="showView('detail')">
+            <td><div class="co-name">Northwind Analytics</div><div class="co-sub">SAFE · Bay Harbor Angels</div></td>
+            <td><span class="pill safe">SAFE</span></td>
+            <td class="num">18 Set 2025</td>
+            <td class="num">$150,000</td>
+            <td class="num">no cap</td>
+            <td><span class="flag-dot ok"></span>Revisado</td>
+          </tr>
+          <tr onclick="showView('detail')">
+            <td><div class="co-name">Solara Robotics</div><div class="co-sub">SAFE · Meridian Seed Fund I</div></td>
+            <td><span class="pill safe">SAFE</span></td>
+            <td class="num">04 Mar 2025</td>
+            <td class="num">$250,000</td>
+            <td class="num">$8M cap</td>
+            <td><span class="flag-dot ok"></span>Revisado</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</div>
+
+<!-- ============ VIEW 2: DEAL DETAIL ============ -->
+<div class="view" id="view-detail">
+  <div class="detail-layout" id="detail-layout">
+    <main class="detail-main">
+      <div class="breadcrumb">Deals / <b>Cascadia Biotics — Series A</b></div>
+      <div class="detail-head">
+        <h1>Cascadia Biotics, Inc.</h1>
+        <span class="pill priced">Series A</span>
+      </div>
+      <div class="detail-meta">
+        <div class="meta-chip"><b>Halcyon Growth Partners</b> · lead</div>
+        <div class="meta-chip">$12,000,000 · $40M pre-money</div>
+        <div class="meta-chip">Fechado em 06 Out 2026</div>
+        <div class="meta-chip">Follow-on de: <b>Seed (12 Jan 2026)</b></div>
+      </div>
+
+      <div class="term-group-title">Valuation &amp; Preço</div>
+      <div class="term-row" onclick="openDrawer(this,'price')">
+        <div class="term-name">Price Per Share</div>
+        <div class="term-value"><span class="val">$4.9016</span>por ação de Series A Preferred</div>
+        <div class="term-arrow">›</div>
+      </div>
+      <div class="term-row" onclick="openDrawer(this,'premoney')">
+        <div class="term-name">Pre-Money Valuation</div>
+        <div class="term-value"><span class="val">$40,000,000</span>valor da empresa antes deste investimento</div>
+        <div class="term-arrow">›</div>
+      </div>
+
+      <div class="term-group-title">Economics</div>
+      <div class="term-row" onclick="openDrawer(this,'liqpref')">
+        <div class="term-name">Liquidation Preference</div>
+        <div class="term-value">Investidores recebem o dinheiro de volta primeiro (1x), <em>senior</em> ao Series Seed, antes dos holders de common compartilharem o restante.</div>
+        <div class="term-arrow">›</div>
+      </div>
+      <div class="term-row" onclick="openDrawer(this,'antidilution')">
+        <div class="term-name">Anti-Dilution</div>
+        <div class="term-value">Proteção contra futuras rodadas com valuation mais baixa, ajuste do tipo <span class="val">broad-based weighted average</span></div>
+        <div class="term-arrow">›</div>
+      </div>
+
+      <div class="term-group-title">Governança</div>
+      <div class="term-row" onclick="openDrawer(this,'board')">
+        <div class="term-name">Board Composition</div>
+        <div class="term-value">Board expandido para <span class="val">7 assentos</span>; novo lead investor ganha 2 indicações</div>
+        <div class="term-arrow">›</div>
+      </div>
+      <div class="term-row" onclick="openDrawer(this,'prorata')">
+        <div class="term-name">Pro Rata Participation</div>
+        <div class="term-value">Ridgeline e Founders Collective exerceram pro rata; Meridian e Tributary abriram mão</div>
+        <div class="term-arrow">›</div>
+      </div>
+    </main>
+
+    <aside class="drawer" id="drawer">
+      <div class="drawer-empty" id="drawer-empty">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z" opacity=".3"/><path d="M8 9h8M8 13h5"/></svg>
+        <p>Clique em qualquer termo à esquerda para ver a linguagem original do documento, lado a lado.</p>
+      </div>
+      <div id="drawer-content" style="display:none;">
+        <div class="drawer-eyebrow">Fonte original</div>
+        <h3 id="d-title">Liquidation Preference</h3>
+        <div class="doc-name" id="d-doc">5 – Second Amended and Restated Certificate of Incorporation.pdf · §2.1–2.2</div>
+
+        <div class="drawer-block">
+          <h5>Em linguagem simples</h5>
+          <p class="plain-text" id="d-plain">Investidores de Series A recebem seu dinheiro de volta primeiro (1x, non-participating) em caso de venda ou liquidação — antes do Series Seed e antes dos holders de common. O Series Seed mantém sua própria preferência de 1x, mas fica atrás do Series A na fila.</p>
+        </div>
+
+        <div class="drawer-block">
+          <h5>Texto original</h5>
+          <div class="source-quote" id="d-quote">"The Series A Preferred Stock ranks <span class="hl">senior to</span> the Series Seed Preferred Stock and the Common Stock with respect to distributions upon a Liquidation Event."</div>
+        </div>
+
+        <div class="drawer-block">
+          <h5>Comparado ao padrão Canary</h5>
+          <p class="plain-text" style="color:#B8E2CB;">✓ Consistente com o template padrão de Series A (1x non-participating, senioridade explícita)</p>
+        </div>
+
+        <div class="drawer-actions">
+          <button class="btn-drawer">Ver documento completo</button>
+          <button class="btn-drawer primary">Comparar com outros deals</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ============ VIEW 3: REVIEW QUEUE ============ -->
+<div class="view" id="view-review">
+  <main class="review-main">
+    <div class="review-head">
+      <h1>Fila de revisão — Ferrum Health</h1>
+      <p>Extração automática a partir do link do Drive fornecido. Termos com alta confiança já vêm pré-marcados; os dois abaixo precisam de um olhar antes de entrar no dataset.</p>
+    </div>
+
+    <div class="upload-card">
+      <div class="ic">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A6408" stroke-width="2"><path d="M12 2v20M2 12h20" opacity="0"/><path d="M22 12A10 10 0 1 1 12 2"/></svg>
+      </div>
+      <div class="txt"><b>Novo deal</b><p>Nome da empresa + link da pasta assinada</p></div>
+      <input type="text" value="drive.google.com/folders/1fK9x…" readonly>
+      <button class="btn-run">Rodar extração</button>
+    </div>
+
+    <!-- item needing review -->
+    <div class="review-card">
+      <div class="review-card-head">
+        <div class="left">
+          <span class="conf-badge review">Revisar</span>
+          <span class="review-term">Indemnification Cap</span>
+        </div>
+        <span class="review-cat">Risk Allocation</span>
+      </div>
+      <div class="review-body">
+        <div class="review-col">
+          <h6>Extraído pelo agente</h6>
+          <p class="extracted">Limitado ao valor do escrow, exceto em casos de fraude ou breach de Fundamental Representations — mas o agente não encontrou uma definição explícita de "Fundamental Representations" neste documento.</p>
+          <div class="cite">1 – Agreement and Plan of Merger.pdf · §5</div>
+        </div>
+        <div class="review-col">
+          <h6>Ajustar se necessário</h6>
+          <textarea>Limitado ao escrow ($14.2M / 10%), exceto fraude ou breach de Fundamental Reps.</textarea>
+        </div>
+      </div>
+      <div class="review-flag-msg">⚑ O agente sinalizou: termo "Fundamental Representations" referenciado mas não definido nas seções revisadas — confirme se está definido em outro anexo antes de aprovar.</div>
+      <div class="review-actions">
+        <button class="btn-sm edit">Ver documento</button>
+        <button class="btn-sm approve">Aprovar</button>
+      </div>
+    </div>
+
+    <!-- confident item, quick approve -->
+    <div class="review-card">
+      <div class="review-card-head">
+        <div class="left">
+          <span class="conf-badge high">Alta confiança</span>
+          <span class="review-term">Escrow Holdback</span>
+        </div>
+        <span class="review-cat">Risk Allocation</span>
+      </div>
+      <div class="review-body">
+        <div class="review-col">
+          <h6>Extraído pelo agente</h6>
+          <p class="extracted">10% da consideration total ($14,200,000), retido por 18 meses para cobrir claims de indenização pós-closing.</p>
+          <div class="cite">4 – Escrow Agreement.pdf · Cover page / §1</div>
+        </div>
+        <div class="review-col">
+          <h6>Comparado ao padrão Canary</h6>
+          <p class="extracted" style="color:var(--forest);">✓ Dentro da faixa usual (8–12% / 12–18 meses)</p>
+        </div>
+      </div>
+      <div class="review-actions">
+        <button class="btn-sm edit">Ver documento</button>
+        <button class="btn-sm approve">Aprovar</button>
+      </div>
+    </div>
+
+    <div class="summary-bar">
+      <div class="stat">Ferrum Health · <b>6</b> termos extraídos · <b>4</b> alta confiança · <b>2</b> para revisar</div>
+      <button class="btn-approve-all">Aprovar 4 de alta confiança →</button>
+    </div>
+  </main>
+</div>
+
+<script>
+  function showView(name){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+name).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelector('.tab-btn[data-view="'+name+'"]').classList.add('active');
+  }
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> showView(btn.dataset.view));
+  });
+
+  const termContent = {
+    price: {
+      title: "Price Per Share",
+      doc: "1 – Series A Preferred Stock Purchase Agreement.pdf · Cover page",
+      plain: "Cada ação de Series A Preferred Stock foi vendida por $4.9016 — um step-up de aproximadamente 3.4x sobre o preço por ação do Seed ($1.4278), refletindo a valorização da empresa entre as rodadas.",
+      quote: "\"...that number of shares of Series A Preferred Stock set forth opposite such Investor's name on Schedule A, at a purchase price of <span class='hl'>$4.9016 per share</span>.\""
+    },
+    premoney: {
+      title: "Pre-Money Valuation",
+      doc: "1 – Series A Preferred Stock Purchase Agreement.pdf · Cover page",
+      plain: "A empresa foi avaliada em $40,000,000 imediatamente antes da entrada do novo capital — mais que triplicando a valuation do Seed ($12M pre-money).",
+      quote: "\"Pre-Money Valuation: <span class='hl'>$40,000,000.00</span>\""
+    },
+    liqpref: {
+      title: "Liquidation Preference",
+      doc: "5 – Second Amended and Restated Certificate of Incorporation.pdf · §2.1–2.2",
+      plain: "Investidores de Series A recebem seu dinheiro de volta primeiro (1x, non-participating) em caso de venda ou liquidação — antes do Series Seed e antes dos holders de common. O Series Seed mantém sua própria preferência de 1x, mas fica atrás do Series A na fila.",
+      quote: "\"The Series A Preferred Stock ranks <span class='hl'>senior to</span> the Series Seed Preferred Stock and the Common Stock with respect to distributions upon a Liquidation Event.\""
+    },
+    antidilution: {
+      title: "Anti-Dilution",
+      doc: "5 – Second Amended and Restated Certificate of Incorporation.pdf · §2.3",
+      plain: "Se a empresa levantar uma rodada futura a um preço por ação mais baixo, o preço de conversão do Series A é ajustado pra compensar parcialmente a diluição — usando a fórmula mais comum do mercado (broad-based weighted average), não a mais agressiva (full ratchet).",
+      quote: "\"...subject to customary anti-dilution adjustments on a <span class='hl'>broad-based weighted average basis</span>.\""
+    },
+    board: {
+      title: "Board Composition",
+      doc: "4 – Amended and Restated Voting Agreement.pdf · §1",
+      plain: "O board cresce de 5 para 7 assentos com a entrada do Series A. Halcyon Growth Partners, como novo lead, ganha 2 indicações — mais do que o padrão de 1 assento por lead investor visto no Seed.",
+      quote: "\"Two (2) members designated by <span class='hl'>Halcyon Growth Partners, L.P.</span>, so long as it holds at least 1,000,000 shares of Series A Preferred Stock.\""
+    },
+    prorata: {
+      title: "Pro Rata Participation",
+      doc: "1 – Series A Preferred Stock Purchase Agreement.pdf · §1.3",
+      plain: "Dois investidores do Seed (Ridgeline e Founders Collective) exerceram seu direito de manter a % de participação, investindo novamente nesta rodada. Meridian e Tributary abriram mão desse direito por escrito.",
+      quote: "\"Meridian Seed Fund I, L.P. and Tributary Angel Syndicate, LLC have each <span class='hl'>waived their pro rata rights</span> with respect to this financing in writing.\""
+    }
+  };
+
+  function openDrawer(el, key){
+    document.querySelectorAll('.term-row').forEach(r=>r.classList.remove('active-row'));
+    el.classList.add('active-row');
+    document.getElementById('drawer-empty').style.display='none';
+    document.getElementById('drawer-content').style.display='block';
+    const d = termContent[key];
+    document.getElementById('d-title').textContent = d.title;
+    document.getElementById('d-doc').textContent = d.doc;
+    document.getElementById('d-plain').textContent = d.plain;
+    document.getElementById('d-quote').innerHTML = d.quote;
+  }
+</script>
+</body>
+</html>
