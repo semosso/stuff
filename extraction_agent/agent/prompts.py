@@ -3,6 +3,9 @@
 Os guard rails do canary_agent_instructions.md estão embutidos no system
 prompt: citar sempre, `not_found` explícito, comparação texto-com-texto,
 critérios de `review`, e nenhum aconselhamento jurídico.
+
+A extração é feita em LOTE: um bloco de categorias por chamada, em vez de
+uma chamada por categoria. Ver README, seção "Processamento em lote".
 """
 
 SYSTEM_PROMPT = """\
@@ -34,6 +37,11 @@ Regras invioláveis (do documento de instruções da Canary):
 7. Nunca combine informação de dois documentos num único campo sem citar
    ambos separadamente.
 
+Ao receber várias categorias numa mesma solicitação, trate cada uma com o
+mesmo cuidado que daria se fosse a única: localize o trecho, cite a seção
+exata e compare com a referência daquela categoria especificamente. Nunca
+reaproveite a citação de uma categoria em outra.
+
 Responda sempre no formato JSON solicitado.
 """
 
@@ -58,40 +66,37 @@ Texto do documento:
 </document>
 """
 
-EXTRACT_INSTRUCTIONS = """\
-Extraia o(s) termo(s) da categoria "{term_category}" do documento
+EXTRACT_BATCH_INSTRUCTIONS = """\
+Extraia os termos das categorias listadas abaixo do documento
 "{file_name}" (tipo: {document_type}), já fornecido acima.
-
-Material de referência da Canary para esta categoria (abas `Templates` e
-`Dicionario_Termos` da planilha — use para reconhecer o termo mesmo com
-redação variável e para a comparação texto-com-texto):
-<reference>
-{reference}
-</reference>
-
-Precedentes de deals já aprovados (aba `Terms`; contexto adicional de
-comparação — se usar, marque precedent_used = true):
-<precedents>
-{precedents}
-</precedents>
 
 Alertas sobre a versão do documento (considere ao atribuir confiança):
 {version_flags}
 
-Tarefas, nesta ordem:
-a. Localize o trecho relevante no documento.
-b. Se o termo NÃO existir no documento, retorne found = false e
-   value = "not_found", com source_section descrevendo o escopo verificado
-   (ex.: "documento completo — cláusula não localizada"). Não deixe nada
-   em branco e não invente um valor.
-c. Se existir: extraia o valor, um resumo em linguagem simples (1-2 frases,
-   sem juridiquês), e a citação exata (seção/cláusula/página).
-d. Compare o trecho extraído com o material de referência acima e escreva
-   uma nota de comparação curta citando os dois lados. Se não houver
-   material de referência aplicável, diga isso na nota — não julgue de
-   memória.
-e. Atribua confiança: "high_confidence" ou "review" (critérios do system
-   prompt). Se "review", explique o motivo em flag_reason.
+Categorias a extrair nesta solicitação, cada uma com seu material de
+referência da Canary (abas `Templates` e `Dicionario_Termos`) e os
+precedentes de deals já aprovados (aba `Terms`):
+
+{category_blocks}
+
+Regras da resposta:
+- Devolva EXATAMENTE um item por categoria listada acima — nem mais, nem
+  menos. O campo `category` de cada item deve repetir literalmente o nome
+  da categoria como foi escrito acima.
+- Para cada categoria, nesta ordem:
+  a. Localize o trecho relevante no documento.
+  b. Se o termo NÃO existir no documento, retorne found = false e
+     value = "not_found", com source_section descrevendo o escopo
+     verificado (ex.: "documento completo — cláusula não localizada").
+     Não deixe nada em branco e não invente um valor.
+  c. Se existir: extraia o valor, um resumo em linguagem simples (1-2
+     frases, sem juridiquês), e a citação exata (seção/cláusula/página).
+  d. Compare o trecho extraído com o material de referência daquela
+     categoria e escreva uma nota de comparação curta citando os dois
+     lados. Se não houver material de referência aplicável, diga isso na
+     nota — não julgue de memória.
+  e. Atribua confiança: "high_confidence" ou "review" (critérios do system
+     prompt). Se "review", explique o motivo em flag_reason.
 """
 
 
@@ -108,6 +113,15 @@ def format_precedents(precedents: list) -> str:
     if not precedents:
         return "(nenhum precedente encontrado para esta categoria)"
     return "\n".join(f"[Terms] {row}" for row in precedents)
+
+
+def format_category_block(category: str, reference: dict, precedents: list) -> str:
+    """Bloco de uma categoria dentro do prompt de extração em lote."""
+    return (
+        f"### Categoria: {category}\n"
+        f"<reference>\n{format_reference(reference)}\n</reference>\n"
+        f"<precedents>\n{format_precedents(precedents)}\n</precedents>"
+    )
 
 
 CLASSIFY_SCHEMA = {
@@ -132,9 +146,13 @@ CLASSIFY_SCHEMA = {
     "additionalProperties": False,
 }
 
-EXTRACT_SCHEMA = {
+_TERM_ITEM_SCHEMA = {
     "type": "object",
     "properties": {
+        "category": {
+            "type": "string",
+            "description": "Nome da categoria, repetido literalmente como foi solicitado.",
+        },
         "found": {"type": "boolean"},
         "term": {"type": "string", "description": "Nome do termo extraído."},
         "value": {
@@ -159,11 +177,15 @@ EXTRACT_SCHEMA = {
         },
         "comparison_note": {
             "type": "string",
-            "description": "Comparação texto-com-texto com o material de referência, citando os dois lados.",
+            "description": (
+                "Comparação texto-com-texto com o material de referência desta "
+                "categoria, citando os dois lados."
+            ),
         },
         "precedent_used": {"type": "boolean"},
     },
     "required": [
+        "category",
         "found",
         "term",
         "value",
@@ -174,5 +196,18 @@ EXTRACT_SCHEMA = {
         "comparison_note",
         "precedent_used",
     ],
+    "additionalProperties": False,
+}
+
+EXTRACT_BATCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "terms": {
+            "type": "array",
+            "items": _TERM_ITEM_SCHEMA,
+            "description": "Um item por categoria solicitada, na mesma ordem.",
+        }
+    },
+    "required": ["terms"],
     "additionalProperties": False,
 }

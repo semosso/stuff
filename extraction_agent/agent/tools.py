@@ -2,15 +2,20 @@
 
 Acesso a dados:
   - Google Drive (leitura): lista e lê os documentos do deal.
-  - Google Sheets (leitura): `Deals`, `Terms`, `Templates`, `Dicionario_Termos`.
+  - Google Sheets (leitura): `Deals`, `Terms`, `Templates`, `Dicionario_Termos`
+    e, para controle de idempotência, `Pendente` e `Publicado`.
   - Google Sheets (escrita): APENAS a aba `Pendente`.
 
-A restrição de escrita à aba `Pendente` é aplicada em DUAS camadas:
+Ler `Pendente`/`Publicado` NÃO afrouxa a restrição de escrita: leitura usa a
+credencial readonly, escrita passa obrigatoriamente por `_append_rows`, que
+recusa qualquer aba != `Pendente`.
+
+A restrição de escrita é aplicada em DUAS camadas:
   1. Nível de permissão do Google Sheets: a service account de escrita só
      tem edição liberada na aba `Pendente` (as demais abas são protegidas
      na planilha — ver README). Uma tentativa de escrita fora dela falha
      com HTTP 403 vindo da API do Google.
-  2. Nível de código: `_append_row` recusa qualquer aba diferente de
+  2. Nível de código: `_append_rows` recusa qualquer aba diferente de
      `Pendente` antes mesmo de chamar a API, com erro explícito.
 
 Nenhuma das duas camadas é silenciosa: ambas levantam exceção.
@@ -21,19 +26,41 @@ from __future__ import annotations
 import datetime
 import io
 import re
+import unicodedata
 from dataclasses import dataclass, field, asdict
-from typing import Optional
 
 from config import Config
 
 PENDENTE_TAB = "Pendente"
 PUBLICADO_TAB = "Publicado"
-READ_ONLY_TABS = ("Deals", "Terms", "Templates", "Dicionario_Termos", PUBLICADO_TAB)
+DEALS_TAB = "Deals"
+
+# Abas que o agente pode LER. A escrita continua restrita a `Pendente`
+# independentemente desta lista (ver `_append_rows`).
+READABLE_TABS = (
+    DEALS_TAB,
+    "Terms",
+    "Templates",
+    "Dicionario_Termos",
+    PENDENTE_TAB,
+    PUBLICADO_TAB,
+)
 
 NOT_FOUND = "not_found"
 CONFIDENCE_LEVELS = ("high_confidence", "review")
 
 DRAFT_FILENAME_MARKERS = ("draft", "rascunho", "redline", "v1", "v2", "wip")
+
+COMPANY_COLUMN_ALIASES = ("Empresa", "Company", "Nome", "Deal", "Startup")
+FOLDER_COLUMN_ALIASES = (
+    "Pasta_Documentos_Assinados",
+    "Pasta",
+    "Pasta_Drive",
+    "Documentos_Assinados",
+    "Drive",
+    "Link",
+    "Folder",
+)
 
 
 class ToolError(Exception):
@@ -54,6 +81,14 @@ class SheetsWritePermissionError(ToolError):
 
 class UnsupportedFileTypeError(ToolError):
     """Tipo de arquivo que o agente não sabe ler."""
+
+
+class EmptyDictionaryError(ToolError):
+    """`Dicionario_Termos` não tem categoria aplicável — falha explícita.
+
+    Sem categorias o agente escreveria zero linhas e o run "passaria" sem
+    nada extraído. Vazio silencioso é falha do agente (§1.2).
+    """
 
 
 # ---------------------------------------------------------------------------
@@ -116,6 +151,30 @@ class GoogleClients:
 
 
 # ---------------------------------------------------------------------------
+# Helpers de normalização
+# ---------------------------------------------------------------------------
+
+def _norm(text: str) -> str:
+    """Minúsculas, sem acento, sem espaços nas pontas."""
+    text = (text or "").strip().lower()
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text) if unicodedata.category(c) != "Mn"
+    )
+
+
+def _get_field(row: dict, *candidates: str) -> str:
+    """Valor da primeira coluna existente entre os candidatos (case/acento-insensível)."""
+    normalized = {_norm(k): v for k, v in row.items()}
+    for candidate in candidates:
+        if not candidate:
+            continue
+        value = normalized.get(_norm(candidate))
+        if value and str(value).strip():
+            return str(value).strip()
+    return ""
+
+
+# ---------------------------------------------------------------------------
 # Drive: listar e ler documentos
 # ---------------------------------------------------------------------------
 
@@ -135,9 +194,10 @@ def extract_folder_id(folder_link: str) -> str:
 def list_files(folder_link: str, clients: GoogleClients) -> list[dict]:
     """Lista os arquivos da pasta do Drive do deal.
 
-    Retorna [{"id", "name", "mimeType"}], sem descartar nada: arquivos de
-    tipo desconhecido também são retornados, para que o loop os registre
-    como `not_classified` em vez de ignorá-los silenciosamente.
+    Retorna [{"id", "name", "mimeType"}], sem descartar nada exceto
+    subpastas: arquivos de tipo desconhecido também são retornados, para
+    que o loop os registre como `not_classified` em vez de ignorá-los
+    silenciosamente.
     """
     folder_id = extract_folder_id(folder_link)
     files: list[dict] = []
@@ -152,7 +212,12 @@ def list_files(folder_link: str, clients: GoogleClients) -> list[dict]:
             )
             .execute()
         )
-        files.extend(response.get("files", []))
+        for item in response.get("files", []):
+            # Subpastas não são documentos; entrariam como `not_classified`
+            # e poluiriam a fila de revisão.
+            if item.get("mimeType") == "application/vnd.google-apps.folder":
+                continue
+            files.append(item)
         page_token = response.get("nextPageToken")
         if not page_token:
             return files
@@ -200,12 +265,12 @@ def filename_draft_markers(file_name: str) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
-# Sheets: leitura do material de referência (read-only)
+# Sheets: leitura (read-only)
 # ---------------------------------------------------------------------------
 
 def _read_tab(tab: str, clients: GoogleClients, config: Config) -> list[dict]:
-    """Lê uma aba read-only e retorna as linhas como dicts (header na linha 1)."""
-    if tab not in READ_ONLY_TABS:
+    """Lê uma aba e retorna as linhas como dicts (header na linha 1)."""
+    if tab not in READABLE_TABS:
         raise ToolError(f"Leitura não prevista para a aba {tab!r}.")
     result = (
         clients.sheets_reader.spreadsheets()
@@ -222,10 +287,6 @@ def _read_tab(tab: str, clients: GoogleClients, config: Config) -> list[dict]:
         row = {header[i]: (raw[i] if i < len(raw) else "") for i in range(len(header))}
         rows.append(row)
     return rows
-
-
-def _norm(text: str) -> str:
-    return (text or "").strip().lower()
 
 
 def search_reference(
@@ -275,9 +336,20 @@ def list_term_categories(document_type: str, clients: GoogleClients, config: Con
     por vírgula), filtra por ela; sem a coluna, todas as categorias são
     consideradas relevantes — e termos ausentes sairão como `not_found`
     explícito, nunca omitidos.
+
+    Levanta `EmptyDictionaryError` se não sobrar nenhuma categoria: um run
+    que não extrai nada precisa falhar alto, não passar em silêncio.
     """
+    rows = _read_tab("Dicionario_Termos", clients, config)
+    if not rows:
+        raise EmptyDictionaryError(
+            "A aba `Dicionario_Termos` está vazia. Sem categorias o agente não "
+            "extrairia nada e o run terminaria sem escrever linha alguma. "
+            "Preencha o dicionário antes de rodar (ver README)."
+        )
+
     categories: list[str] = []
-    for row in _read_tab("Dicionario_Termos", clients, config):
+    for row in rows:
         category = (row.get("Categoria") or "").strip()
         if not category or category in categories:
             continue
@@ -287,7 +359,105 @@ def list_term_categories(document_type: str, clients: GoogleClients, config: Con
             if _norm(document_type) not in allowed:
                 continue
         categories.append(category)
+
+    if not categories:
+        raise EmptyDictionaryError(
+            f"Nenhuma categoria do `Dicionario_Termos` se aplica ao tipo de "
+            f"documento {document_type!r}. Verifique a coluna `Tipos_Documento` "
+            "— se ela não previr este tipo, nada será extraído."
+        )
     return categories
+
+
+# ---------------------------------------------------------------------------
+# Sheets: aba `Deals` (fonte dos deals a processar) e idempotência
+# ---------------------------------------------------------------------------
+
+@dataclass
+class DealEntry:
+    """Uma linha da aba `Deals`.
+
+    `issue` preenchido significa que o deal não pode ser processado — ele
+    ainda assim aparece no relatório final, nunca é descartado em silêncio.
+    """
+
+    company: str
+    folder_link: str
+    row_number: int
+    issue: str = ""
+
+    @property
+    def processable(self) -> bool:
+        return not self.issue
+
+
+def _find_folder_link(row: dict) -> str:
+    """Fallback: qualquer coluna cujo valor pareça um link de pasta do Drive."""
+    for value in row.values():
+        text = str(value or "").strip()
+        if "drive.google.com" in text or "/folders/" in text:
+            return text
+    return ""
+
+
+def list_deals(clients: GoogleClients, config: Config) -> list[DealEntry]:
+    """Lê a aba `Deals` e devolve os deals a processar, na ordem da planilha.
+
+    Resolve as colunas de empresa e pasta pelo nome configurado, depois por
+    aliases conhecidos e, para a pasta, por qualquer coluna com um link do
+    Drive. Linhas sem empresa ou sem link voltam com `issue` preenchido.
+    """
+    entries: list[DealEntry] = []
+    for index, row in enumerate(_read_tab(DEALS_TAB, clients, config), start=2):
+        if not any(str(v or "").strip() for v in row.values()):
+            continue  # linha totalmente em branco
+
+        company = _get_field(row, config.deals_company_column, *COMPANY_COLUMN_ALIASES)
+        folder = _get_field(row, config.deals_folder_column, *FOLDER_COLUMN_ALIASES)
+        if not folder:
+            folder = _find_folder_link(row)
+
+        issue = ""
+        if not company:
+            issue = (
+                f"Linha {index}: coluna de empresa não encontrada ou vazia "
+                f"(esperada {config.deals_company_column!r})."
+            )
+        elif not folder:
+            issue = (
+                f"Linha {index}: link da pasta de documentos assinados ausente "
+                f"(esperada coluna {config.deals_folder_column!r})."
+            )
+        else:
+            try:
+                extract_folder_id(folder)
+            except ToolError as exc:
+                issue = f"Linha {index}: {exc}"
+
+        entries.append(
+            DealEntry(
+                company=company or f"(sem empresa — linha {index})",
+                folder_link=folder,
+                row_number=index,
+                issue=issue,
+            )
+        )
+    return entries
+
+
+def list_processed_companies(clients: GoogleClients, config: Config) -> dict[str, set[str]]:
+    """Empresas que já têm linhas em `Pendente` e/ou `Publicado`.
+
+    Usado para idempotência: re-rodar o lote não pode duplicar rascunhos,
+    nem ressuscitar como pendente um deal que o Legal já aprovou.
+    """
+    processed: dict[str, set[str]] = {PENDENTE_TAB: set(), PUBLICADO_TAB: set()}
+    for tab in (PENDENTE_TAB, PUBLICADO_TAB):
+        for row in _read_tab(tab, clients, config):
+            company = _get_field(row, config.deals_company_column, *COMPANY_COLUMN_ALIASES)
+            if company:
+                processed[tab].add(_norm(company))
+    return processed
 
 
 # ---------------------------------------------------------------------------
@@ -379,20 +549,25 @@ def validate_term_row(row: TermRow) -> None:
         raise missing("timestamp", "Campo de auditoria nunca fica em branco (§5).")
     if not row.versao_documento.strip():
         raise missing("versao_documento", "Campo de auditoria nunca fica em branco (§5).")
+    if not row.empresa.strip():
+        raise missing("empresa", "Sem empresa a linha não é rastreável nem idempotente.")
 
 
-def _append_row(tab: str, values: list, clients: GoogleClients, config: Config) -> dict:
+def _append_rows(tab: str, values_list: list[list], clients: GoogleClients, config: Config) -> dict:
     """Única função que toca a API de escrita do Sheets.
 
     Recusa qualquer aba != Pendente ANTES de chamar a API. A proteção a
     nível de planilha (README) é a segunda camada, caso este código seja
-    contornado.
+    contornado. Escreve todas as linhas numa chamada só — com milhares de
+    termos, uma chamada por linha estoura a cota de escrita do Google.
     """
     if tab != PENDENTE_TAB:
         raise TabWriteNotAllowedError(
             f"Escrita recusada: este agente só escreve na aba {PENDENTE_TAB!r}. "
             f"Aba solicitada: {tab!r}. Isso vale mesmo por instrução do usuário."
         )
+    if not values_list:
+        return {}
     try:
         return (
             clients.sheets_writer.spreadsheets()
@@ -402,7 +577,7 @@ def _append_row(tab: str, values: list, clients: GoogleClients, config: Config) 
                 range=f"{tab}!A:{chr(ord('A') + len(DRAFT_COLUMNS) - 1)}",
                 valueInputOption="RAW",
                 insertDataOption="INSERT_ROWS",
-                body={"values": [values]},
+                body={"values": values_list},
             )
             .execute()
         )
@@ -418,7 +593,26 @@ def _append_row(tab: str, values: list, clients: GoogleClients, config: Config) 
         raise
 
 
+def _append_row(tab: str, values: list, clients: GoogleClients, config: Config) -> dict:
+    """Atalho de uma linha só (mantido para chamadas pontuais e testes)."""
+    return _append_rows(tab, [values], clients, config)
+
+
 def write_draft(term_row: TermRow, clients: GoogleClients, config: Config) -> dict:
     """Escreve uma linha de rascunho na aba `Pendente`. Nunca em `Publicado`."""
-    validate_term_row(term_row)
-    return _append_row(PENDENTE_TAB, term_row.to_values(), clients, config)
+    return write_drafts([term_row], clients, config)
+
+
+def write_drafts(term_rows: list[TermRow], clients: GoogleClients, config: Config) -> dict:
+    """Escreve várias linhas de rascunho numa única chamada.
+
+    Valida TODAS as linhas antes de escrever qualquer uma: uma linha
+    inválida no meio do lote não pode deixar metade do documento gravado.
+    """
+    if not term_rows:
+        return {}
+    for row in term_rows:
+        validate_term_row(row)
+    return _append_rows(
+        PENDENTE_TAB, [r.to_values() for r in term_rows], clients, config
+    )
