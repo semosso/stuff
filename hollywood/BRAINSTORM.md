@@ -163,23 +163,23 @@ resultado pessoal (rolagem):
   da Luta, Crash ao contrário). Eles geram um card tardio que recalcula Prestígio. É a mecânica mais
   cinéfila do jogo.
 
-### 2.7 Pessoas reais: o que pode e o que não pode
-Política em três camadas, para o jogo ser divertido sem virar processo:
+### 2.7 Pessoas reais: fato é fato, rumor é rumor
+Decisão de produto: **sem medo de processo**. O jogo é sátira sobre figuras públicas, usa fatos de
+obra e fatos públicos, e tudo que circulou como rumor entra **marcado como rumor**. Essa marcação
+é fácil, é honesta e, de quebra, é engraçada: Hollywood funciona a rumor.
 
-| Camada | Pode nomear? | Exemplos |
+| Tipo de informação | Como entra no jogo | Exemplo de texto |
 |---|---|---|
-| **A — Fatos de obra** | Sempre | Filmes, diretores, co-stars, bilheteria, crítica, prêmios, duração de filmagem, número de takes documentado, quem recusou o papel. |
-| **B — Fatos públicos e documentados sobre a pessoa** | Sim, com enquadramento factual e sem inventar nada | Condenações (o produtor condenado em 2020 e 2022), feudos públicos, o tapa de 2022, falência declarada, greves, declarações públicas. |
-| **C — Vício, sexo, crime, doença inventados** | **Nunca com nome real** | A balada com cocaína, o romance com a co-star, o culto, o agente que rouba, "a co-star que chegou 4 horas atrasada com um lêmure". Esses eventos usam personagens **fictícios ou compostos** ("o anfitrião da festa", "uma igreja com muitos famosos"), ou acontecem só com você. |
+| **Fato de obra** (filme, papel, bilheteria, crítica, prêmio, takes, duração de set, quem recusou) | Direto, sem ressalva | "A cena de abertura teve 99 takes." |
+| **Fato público sobre a pessoa** (condenação, feudo público, declaração, o tapa, falência) | Direto, com data | "Em 2020 e 2022 o produtor foi condenado." |
+| **Rumor / fofoca / 'fontes'** (set problemático, briga de bastidor, romance, hábito) | Sempre com etiqueta: *"dizem que"*, *"segundo o tabloide"*, *"rumor nunca confirmado"*, ou uma tag visual 🗞️ RUMOR | "🗞️ Dizem que ele chegou 4 horas atrasado todos os dias. Ele nega." |
+| **Vício, sexo e crime que o jogo inventa para a SUA história** | Acontece com você e com personagens fictícios (anfitrião da festa, agente, guru, o amor da sua vida); a pessoa real pode estar na mesma festa, mas não é ela que te oferece nada | "Na festa de um astro de franquia de carros, alguém que você não conhece te oferece outra coisa." |
 
 Regras práticas:
-- Pessoas falecidas: menos risco legal, mas o mesmo bom gosto (Kubrick pode ser "o diretor dos 127
-  takes"; não pode ser acusado de nada que não esteja documentado).
-- Nunca atribuir romance a pessoa real. A co-star real é só colega de cena; o amor da sua vida é fictício.
-- Disclaimer na home e no card: fan-made, não afiliado, sátira, dados de TMDB/OMDb.
-- Antes de monetizar: uma hora com um advogado. Enquanto for não comercial, a licença gratuita do TMDB
-  cobre os dados (com atribuição obrigatória). **Pôsteres são dos estúdios**, não do TMDB: usar
-  dentro do jogo com atribuição é prática comum; **no card compartilhável, só texto e tipografia própria**.
+- Co-stars reais são colegas de cena, com fatos e rumores etiquetados. Romance e casamento dentro do jogo são com personagens fictícios (romance real inventado não é rumor, é invenção, e também é menos engraçado que "você casou com um baterista em Vegas por 55 horas").
+- A tag 🗞️ RUMOR vira elemento de interface: Carisma alto "ouve mais rumores" antes de escolher (mais informação, de qualidade duvidosa). Rumor pode estar errado: 20% dos rumores do jogo são falsos e a revelação diz "o rumor era mentira".
+- Disclaimer curto na home e no card: fan-made, sátira, não afiliado, dados do TMDB/OMDb.
+- Pôsteres: uso dentro do jogo com atribuição ao TMDB; no card compartilhável, só texto e tipografia própria, porque pôster é do estúdio e o card vai circular fora do jogo.
 
 ### 2.8 Mais exemplos de descrição → revelação (para calibrar o tom)
 
@@ -197,14 +197,14 @@ Regras práticas:
 | "Um diretor coreano quer você num trem que nunca para, dividido em classes sociais. Você come barras de proteína." | **Expresso do Amanhã (2013)**, Bong Joon-ho, papel de Chris Evans | Cult: Prestígio ++, Fama +0, flag `cinéfilo` |
 | "Um produtor cuja campanha de Oscar é mais agressiva que o filme quer você numa comédia romântica de época sobre um dramaturgo." | **Shakespeare Apaixonado (1998)**, produção Miramax, papel de Gwyneth Paltrow | Oscar de Melhor Atriz e Melhor Filme → Prestígio +++; flag `trabalhou_com_o_produtor` que explode como card em 2017 ("A reportagem sai. Jornalistas perguntam o que você sabia.") |
 
-**Pessoas recorrentes reais** (camada A/B): diretores-autores com múltiplos filmes na janela de anos
+**Pessoas recorrentes reais**: diretores-autores com múltiplos filmes na janela de anos
 (Scorsese, Spielberg, Nolan, Fincher, Tarantino, Coppola, Allen — este com card de contexto 2014+,
 Kubrick, Cameron, Bigelow, Campion, Greta Gerwig, Jordan Peele, Villeneuve, Lanthimos, Almodóvar…).
 Cada um tem **3 níveis de descrição** (difícil → óbvio) e uma personalidade mecânica
 (takes, duração de set, chance de prêmio, efeito em Estabilidade).
 
-**Pessoas fictícias** (camada C): agente, empresário, co-star caótica, guru do culto, anfitrião da
-festa, o amor da sua vida, o veterano generoso que te apadrinha (pode ser real se só fizer coisas boas).
+**Pessoas fictícias**: agente, empresário, co-star caótica, guru do culto, anfitrião da festa, o amor
+da sua vida. O veterano generoso que te apadrinha pode ser real (Paul Newman te chamando de "garoto" é melhor que qualquer invenção).
 
 ---
 
@@ -288,13 +288,13 @@ Sempre 2 ou 3 ofertas às cegas, com cachê, risco, tempo até estrear e ícones
 guaxinim numa franquia espacial" (Guardiões da Galáxia, 2014, papel de Bradley Cooper).
 
 ### 6.2 Pessoas
-- **Reais (camada A/B)**: diretores, produtores, co-stars, apresentadores. Têm efeitos persistentes
+- **Reais**: diretores, produtores, co-stars, apresentadores. Fatos diretos, rumores etiquetados (2.7). Têm efeitos persistentes
   (Talento +1 permanente depois de sobreviver a Kubrick; `turma_do_sandler`; `trabalhou_com_o_produtor`).
-- **Fictícias (camada C)**: agente do porão (20%), agente-tubarão, empresário que também é sua mãe,
+- **Fictícias**: agente do porão (20%), agente-tubarão, empresário que também é sua mãe,
   co-star caótica, guru, o veterano generoso, o amor da sua vida. Instanciadas com variações e nome
   descritivo persistente ("o agente da lavanderia").
 
-### 6.3 Vida pessoal (fictícia, com cenário real)
+### 6.3 Vida pessoal (personagens fictícios, cenário real)
 - **A balada**: "Depois da festa de Oscar de uma revista, alguém te chama para a continuação nas colinas."
   Ir / não ir / ir e sair cedo [Juízo 3]. Rolagem: conhece produtor (Contatos +), conhece o amor da sua
   vida, conhece cocaína (Vício +2), conhece um guru, foto vaza, nada acontece e você segura um copo 2h.
@@ -303,7 +303,7 @@ guaxinim numa franquia espacial" (Guardiões da Galáxia, 2014, papel de Bradley
 - **Filhos**: Estabilidade +2; ofertas −1 por 3 anos para mulheres, 0 para homens (sátira explícita).
 - **Família**: pais pedem dinheiro; irmão quer ser seu empresário; pai escreve livro.
 - **Culto**: "Uma amiga te convida para um centro com cursos de 'autoconhecimento'. Metade do elenco
-  de uma franquia frequenta." (Sem nome. Todo mundo vai entender.)
+  de uma franquia frequenta." (A igreja pode ser nomeada na revelação: a filiação dos famosos é fato público. O guru que te recruta é fictício.)
 - **Dinheiro**: tequila, skincare, cripto (só ≥ 2017), restaurante, time de futebol galês (≥ 2020), vinícola.
 - **Saúde**: lesão em set de ação → opioides; cirurgia (Beleza +1 agora, −2 aos 50, Heat +); burnout.
 
@@ -403,7 +403,7 @@ Obrigatório no card:
 - **Desafio diário**: mesma seed (mesmo ano de estreia, atributos pré-definidos, mesmas ofertas).
   "Hoje: nepo baby de 1989 com Juízo 1."
 - **Modo Destino**: arquétipo pronto ("Ex-criança estrela, 1994, $4M, Vício 3. Boa sorte.").
-- **Modo Cenário** (v2): momento real, pessoa real, camada B ("É 2022. Alguém fez piada com sua
+- **Modo Cenário** (v2): momento real, pessoa real ("É 2022. Alguém fez piada com sua
   esposa no palco. Você tem 4 segundos.").
 - **Seed compartilhável**; **estatísticas globais** ("73% de quem aceitou Thor nunca foi indicado");
   **conquistas** (*Sem anel*, *Nômade* (7 agentes), *Disse não ao centro*, *A voz*, *Saiu enquanto podia*,
@@ -416,7 +416,7 @@ Obrigatório no card:
 ## 13. Tom, escrita e limites
 
 - **Voz**: narrador de documentário cansado + manchete de *Variety* + amigo fofoqueiro.
-- **Real = fatos; fictício = vícios.** Ver 2.7. A piada é sempre sobre Hollywood, nunca sobre a vítima.
+- **Fato é fato, rumor é rumor (🗞️).** Ver 2.7. A piada é sempre sobre Hollywood e sobre o ego, nunca sobre a vítima.
 - **OD e suicídio**: só no Modo Realista; texto seco; linha de apoio discreta no card (CVV 188).
 - **Gênero e idade**: duplo padrão explícito porque é sátira; escolha de gênero muda as ofertas (dados
   reais já fazem isso sozinhos: há menos protagonistas mulheres de 45+ no TMDB, e o jogo mostra).
@@ -432,7 +432,7 @@ Obrigatório no card:
 para o "centro" · pirâmide de suplementos · pai/mãe se muda para LA.
 
 **Ato II** — a capa ou o sofá (duas ofertas reais) · co-star caótica (fictícia) · o diretor dos 127 takes
-(real) · o produtor do "café" (real, camada B; só o convite para reunião é narrado) · primeiro flop
+(real) · o produtor do "café" (real; o convite e o que foi documentado depois são fatos, o resto é 🗞️) · primeiro flop
 · tabloide inventa romance com músico (fictício) · a franquia renova · o diretor dinamarquês · Vegas 55 h
 · agente some com $2M · tweet antigo · apresentar o programa de sábado · lesão → opioides · o indie que
 você fez por nada ganha em festival francês · o diretor coreano · colega de sitcom morre.
@@ -501,7 +501,7 @@ revision: null   # ou { year: 2022, text: "...", prestige_delta: +3 }
 ```
 
 ```yaml
-# evento fictício (camada C)
+# evento fictício (personagens inventados)
 id: balada_nas_colinas
 ato: [1, 2]
 peso: 8
@@ -531,11 +531,13 @@ opcoes:
 
 ---
 
-## 16. Perguntas em aberto
+## 16. Decisões em aberto
 
-1. **Swipe ou botões?** Swipe é mais viral no celular; botões permitem a 3ª opção. Proposta: swipe + "puxar para cima".
-2. **Quanto ruído nas probabilidades?** Dados reais exatos matam a surpresa. Proposta: ±15 pontos.
-3. **Pôsteres do TMDB dentro do jogo?** Prática comum com atribuição, mas direito é do estúdio. Proposta: sim no jogo, nunca no card.
-4. **Produtor condenado: nomear ou não?** Camada B diz sim, com fatos. Proposta: nomear na revelação e no card de 2017; nunca narrar o "café" com detalhes inventados.
-5. **Ator original no card**: "no papel de Kate Winslet" é o gancho; algum ator vivo pode não gostar. Risco baixo (fato de obra), mas decidir.
-6. **Nome do jogo**: *Estrela Cadente* · *Agradeço à Academia* · *Baseado em Fatos Reais* · *No Papel De* · *Recusei Titanic*.
+As perguntas abertas (interação, ruído nas probabilidades, pôsteres, nome, janela de anos do MVP,
+idiomas, stack, duração da run, features da v1, divisão de trabalho) estão num questionário
+editável fora deste arquivo. As respostas serão consolidadas aqui numa seção **17. Decisões tomadas**.
+
+Decidido até agora:
+- **Pessoas reais**: fato direto, rumor etiquetado, invenção só com fictícios (2.7). Sem medo de processo.
+- **Atributos revelam informação** e atravessam áreas (Contatos → nome do diretor; Juízo → sinais de alerta; Carisma → rumores; Talento → roteiro).
+- **Filmes e pessoas reais**, revelados depois da escolha, com "o que você recusou" no card.
