@@ -1,434 +1,541 @@
-# ESTRELA CADENTE — simulador de carreira em Hollywood
-### Documento de brainstorm (sistemas, conteúdo, caminhos e finais)
+# ESTRELA CADENTE — simulador de carreira em Hollywood (com filmes e pessoas reais)
+### Documento de brainstorm v2 — panorama do mercado, sistemas, conteúdo, caminhos e finais
 
 > Jogo web curto (3–6 min por run), sem cadastro, sem instalação. Você cria um ator ou atriz,
-> distribui pontos entre atributos, e toma ~25 decisões ao longo de uma carreira de 40 anos.
-> No fim, recebe um **card compartilhável** dizendo como sua carreira terminou:
+> distribui pontos entre atributos e, ao longo de 30 anos de carreira, escolhe **às cegas** entre
+> ofertas reais descritas sem nome ("um diretor que faz 99 takes da cena de abertura").
+> Só depois de escolher o jogo revela: **A Rede Social (2010), David Fincher, no papel que foi
+> de Jesse Eisenberg.** No fim, um card compartilhável diz como sua carreira terminou:
 > da lenda EGOT ao "pelado na Sunset Boulevard gritando com um hidrante".
 
 ---
 
-## 0. O que aprender com as referências
+## 0. Já existe algo assim?
 
-| Jogo | O que fazer igual | O que fazer diferente |
-|---|---|---|
-| **82-0 / 7-0** | Loop de 2 minutos. Um "sorteio" te empurra para decisões imperfeitas. Resultado com nota/categoria (loteria → dinastia). Card final pensado para print. | Eles não têm narrativa; aqui a narrativa É o produto. |
-| **Copero (simulador de carrera)** | Estrutura por idade (16→38). Swipe esquerda/direita estilo *Reigns*. Eventos com resultado positivo/neutro/negativo e **probabilidade mostrada**. Efeitos imediatos, diferidos e permanentes. Conquistas com nomes engraçados ("one_club_legend", "ringless", "nomad"). Evento absurdo que vira conversa (a tatuagem de águia gigante). | Em Hollywood o "troféu" é mais plural: prêmio, bilheteria, culto, meme. E o fracasso é mais interessante que no futebol. |
-| **Volante de Ouro** | Escolha de era muda o elenco de rivais e as regras. "Realismo histórico" como toggle (acidente pode acabar a carreira). Modo cenário (assuma uma pessoa real num momento). | Volante é longo (temporadas inteiras). Aqui a run tem que caber numa fila de banco. |
+Resposta curta: **não exatamente**. Existe muita coisa *perto*, mas ninguém juntou as três peças
+(run curta compartilhável + filmes e pessoas reais com revelação + finais satíricos).
 
-**Regras de ouro do formato viral**
-1. Run curta, final forte, card bonito. O jogo "de verdade" acontece no grupo de WhatsApp comparando finais.
-2. Zero nomes reais. Tudo por descrição, e o prazer do jogador é **reconhecer** ("é o Nolan!", "é o Weinstein!!"). Isso também é a blindagem jurídica.
-3. Toda escolha tem um lado óbvio e um lado tentador. Se não houver tentação, não é decisão.
-4. Aleatoriedade visível. Mostrar "72% de chance" e perder é mais divertido (e mais compartilhável) do que perder sem saber por quê.
-5. Finais ruins têm que ser **tão desejáveis quanto os bons**. Gente vai jogar de propósito para terminar na indústria pornô. Isso é feature.
+| Jogo | Ano / plataforma | O que é | Por que não é a mesma coisa |
+|---|---|---|---|
+| **BitLife** (caminho de ator) | 2018– / mobile | Life sim de texto. Carreira de ator vira "movie star", libera barra de fama, talk shows, livros, comerciais. | Genérico, sem narrativa de Hollywood, tudo fictício, run longa, sem card de final. |
+| **Kim Kardashian: Hollywood** | 2014–2024 / mobile (Glu) | Suba de desconhecido a lista A fazendo jobs, eventos e dates. Faturou US$ 156 mi em 2 anos. Fechou em abril de 2024. | Grind com compras in-app; sem escolhas com consequência; tudo fictício. Mostra que o **tema vende**. |
+| **Stardom: Hollywood** / *Hollywood Movie Star Life Sim* / *Starlight Actor Life Sim* / *ActorLife* | 2013– / mobile | Simuladores "de pequeno papel a estrela" com testes, escândalos, paparazzi, RP. | Mesma família do anterior: grind, não história. Fictícios. |
+| **Hollywood Visionary** (Choice of Games, Aaron Reed) | 2015 / texto (Steam, mobile) | Você comanda um estúdio na Hollywood dos anos 50. Vários finais. | Chefe de estúdio, não ator. Texto longo (horas). Nomes fictícios. |
+| **Hollywood Hustle** | 2008 / celular Java | Aventura de texto com a atriz Lucy Starling; 9 finais; sem "certo ou errado". | Linear, antigo, fictício. Mas prova o formato "escolhas → final" no tema. |
+| **The Fame Game: Welcome to Hollywood** | set/2025 / Steam (US$ 8,99) | Dating sim em FMV num reality de TV, vários finais. | Romance em vídeo, não carreira. |
+| **Where We Lay Our Scene** | visual novel | Ator envelhecendo decide o próximo passo da carreira. Finais "nem bons nem ruins". | Visual novel longa; um recorte da ideia (nosso Ato IV). |
+| **Hollywood Animal** (Weappy) | abr/2025 / Steam early access, US$ 19,99 | Tycoon de estúdio a partir de 1929, com máfia e métodos sujos. "Mostly Positive" com ~3,8 mil reviews. | Gestão profunda, horas de jogo, nomes alterados. |
+| **The Movies** (Lionhead) | 2005 / PC | Tycoon de estúdio com editor de filmes. | Idem. |
+| **Actor Tycoon 2** | itch.io / Steam (beta) | Você é o **agente**, escolhe papéis para seus atores. | Perspectiva do agente. |
+| **Rockstar!** | anos 80 / texto | Paródia da indústria da música: banda, drogas, turnês, saúde. | Música, não cinema. Mas é o ancestral espiritual do tom. |
+| **Reaching For The Star** | previsto Q4/2027 / Steam | Life sim de atriz/idol (testes, música, variedades). | Ainda não existe; fictício; coreano. |
+| **I Want To Be Famous** (Twine) | itch.io | Escolha seu caminho para a fama; 5 caminhos + 1 final secreto. | Protótipo pequeno, fictício. |
+| **Copero / El Ídolo** | 2026 / web | Carreira de jogador de futebol, 16→38 anos, swipe, card final. | **Estruturalmente é o que queremos, mas em futebol.** |
+| **82-0 / 7-0** | 2026 / web | Draft de jogadores reais (um por década), simulação, card. | Dados reais + reconhecimento, mas sem narrativa. |
+| **Jogos diários de cinema** (Framed, Box Office Game, Cine2Nerdle, Spotle Movies, Critical) | web | Adivinhe o filme por frames / bilheteria / review do Letterboxd. | Provam que **o público de cinema adora "adivinhe por descrição"** e já vive de dados do TMDB. |
+
+**O buraco no mercado**: ninguém fez o "82-0 do cinema" em formato de carreira. Nenhum é em
+português. Nenhum usa filmografia real como material de escolha. E nenhum trata o fracasso
+(OD, culto, esquecimento, pornô) como final tão desejável quanto o sucesso.
+
+**Riscos de alguém chegar antes**: baixo-médio. A onda 82-0 → 7-0 → Copero mostra que o formato
+está sendo copiado para outros esportes a cada mês; cinema é o próximo tema óbvio. Vale correr.
 
 ---
 
-## 1. Criação de personagem
+## 1. O que aprender com as referências
 
-### 1.1 Point buy — 5 atributos, 12 pontos, cada um de 1 a 5
+| Jogo | O que copiar | O que fazer diferente |
+|---|---|---|
+| **82-0 / 7-0** | Loop de 2 minutos. Um "sorteio" te empurra para escolhas imperfeitas. Resultado com categoria. Card para print. **Material real: o prazer é reconhecer.** | Eles não têm narrativa; aqui a narrativa É o produto. |
+| **Copero** | Estrutura por idade. Swipe esquerda/direita estilo *Reigns*. Probabilidade mostrada. Efeitos imediatos, diferidos e permanentes. Conquistas com nome engraçado. Evento absurdo que vira conversa (a tatuagem de águia gigante). | Em Hollywood o "troféu" é plural: prêmio, bilheteria, culto, meme. |
+| **Volante de Ouro** | Escolha de era muda tudo. Toggle "realismo" permite morte. Modo cenário (assuma uma pessoa real num momento). Disclaimer "fan-made, não afiliado". | Volante é longo; aqui a run cabe numa fila de banco. |
+
+**Regras de ouro do formato viral**
+1. Run curta, final forte, card bonito. O jogo de verdade acontece no grupo comparando finais.
+2. **Decidir no escuro, reconhecer depois.** A descrição é o enigma; a revelação é a recompensa.
+3. Toda escolha tem um lado óbvio e um lado tentador.
+4. Aleatoriedade visível: perder com "72% de chance" é melhor que perder sem saber por quê.
+5. Finais ruins têm que ser tão desejáveis quanto os bons.
+
+---
+
+## 2. A grande mudança: tudo real
+
+### 2.1 O loop de um card de projeto
+```
+[1998 • 27 anos • Fama ▮▮▯▯▯ • Contatos 3]
+
+◀ "Um diretor que mora na Inglaterra e        "Um produtor cuja campanha de Oscar é    ▶
+   não entra em avião quer você num hotel      mais agressiva que o filme quer você numa
+   vazio no inverno. Uma cena vai ter 127       comédia romântica de época sobre um
+   takes. Seu marido na tela é mais famoso      dramaturgo com bloqueio criativo.
+   que você."                                   Figurino lindo. Rival de bilheteria: um
+   💵 $      🏆 5%     🔮 60%    🧨 30%           filme de guerra de um diretor barbudo."
+   estreia em 2 anos                            💵 $$     🏆 45%    🔮 5%     🧨 10%
+                                                estreia em 1 ano
+```
+Você escolhe. O card vira:
+
+> **O ILUMINADO (1980)** — dir. Stanley Kubrick. Você ficou com o papel que foi de **Shelley Duvall**.
+> Contracenou com Jack Nicholson. Filmagem: 13 meses. A cena do taco de beisebol: 127 takes (recorde).
+>
+> **O que aconteceu com o filme:** bilheteria OK (US$ 47 mi), crítica dividida na época,
+> hoje considerado um dos maiores filmes de terror da história.
+> **O que aconteceu com você:** [rolagem: Talento 3 vs. exigência do papel 4] *indicada ao Razzie
+> de Pior Atriz.* Estabilidade −3. Prestígio +0 (por enquanto).
+>
+> ⏳ **Revisão histórica (card no Ato V):** "Em 2022 a Razzie Foundation retira sua indicação e pede
+> desculpas. Você diz que não se lembra do filme. É mentira."
+
+A outra opção também é revelada, menor, embaixo: *"Você recusou: Shakespeare Apaixonado (1998) —
+Gwyneth Paltrow ganhou o Oscar de Melhor Atriz. O filme bateu O Resgate do Soldado Ryan."*
+Esse "o que você recusou" é o combustível do compartilhamento.
+
+(Exemplo propositalmente anacrônico para mostrar os dois cards; no jogo, as duas ofertas são do mesmo ano.)
+
+### 2.2 Por que isso funciona melhor que ficção
+- **Reconhecimento** é o mesmo prazer do 82-0: "era o Fincher!", "eu recusei Titanic!!".
+- **Trívia de graça**: cada revelação ensina algo ("Will Smith recusou Neo para fazer *As Loucas
+  Aventuras de James West*"). Um card de trívia opcional: *"Quem recusou este papel na vida real"*.
+- **Card final imbatível**: *"Em 1996 recusei Jerry Maguire para fazer Striptease. Em 2003 trabalhei
+  com Scorsese. Terminei: Rei do Filme de Natal."* Isso é um tweet pronto.
+- **Conteúdo quase infinito**: o TMDB tem 1 milhão de filmes; a curadoria é o trabalho, não a invenção.
+- **Debate**: "o jogo diz que Hereditary dava 60% de chance de prêmio e a Toni Collette foi esnobada" vira
+  discussão de Letterboxd.
+
+### 2.3 Informação é atributo (o point buy ganha sentido)
+Antes de escolher, quanto você enxerga da oferta depende de quem você é:
+
+| Atributo | O que ele revela antes da escolha |
+|---|---|
+| **Contatos 1** | Gênero, orçamento aproximado, tempo de filmagem. |
+| **Contatos 3** | Descrição do diretor com um "tell" a mais (filmes anteriores descritos). |
+| **Contatos 5** | **O nome do diretor.** Você sabe que é o Nolan. Os outros não. |
+| **Juízo ≥ 3** | 🚩 "Sinal de alerta": produção documentadamente problemática (reshoots, diretor demitido, orçamento estourado). |
+| **Talento ≥ 3** | Faixa de qualidade do roteiro (proxy: crítica real, mostrada como "o texto é bom / é um pretexto para explosões"). |
+| **Carisma ≥ 3** | Descrição dos co-stars ("você vai contracenar com o ator mais bem pago do mundo"). |
+| **Beleza** | Não revela nada. Mas abre ofertas: papéis de galã/musa só aparecem com Beleza ≥ 3. |
+
+Quem gasta tudo em Beleza joga literalmente no escuro. Isso é tema e mecânica ao mesmo tempo.
+
+### 2.4 Linha do tempo real
+- Na criação você escolhe o **ano de estreia** (MVP: 1975–1995, para a carreira de 30 anos fechar
+  antes de 2026). Depois: 1950–2020, com "futuro especulativo" claramente marcado após 2026.
+- Cada ato = 6 anos. Cada ato tem 3 cards de projeto (um a cada 2 anos), e as ofertas vêm de filmes
+  lançados nos 1–2 anos seguintes ao ano atual (o **pipeline**: você assina em 1996, estreia em 1997).
+- Eventos do mundo real entram como cards de contexto quando o ano chega: greve de roteiristas
+  (1988, 2007, 2023), #MeToo (2017), pandemia (2020), chegada do streaming, "a noite do tapa" (2022).
+- Modo Cenário (v2): "É 1997. Você é a atriz que acabou de recusar Titanic. O telefone toca."
+
+### 2.5 Como as ofertas são geradas (algoritmo)
+1. **Pool**: filmes lançados em [ano+1, ano+2] no TMDB com um ator/atriz do seu gênero nas 4 primeiras
+   posições do elenco; excluir animação (exceto como "papel de voz"), documentário, filmes sem orçamento
+   nem bilheteria conhecidos.
+2. **Faixa**: sua Fama define a faixa de orçamento/popularidade. Sempre 1 oferta "do seu tamanho",
+   1 "acima" (reach) e, às vezes, 1 "abaixo" (indie/prestígio).
+3. **Contraste garantido**: quando possível, uma "armadilha" (orçamento alto, crítica baixa) e uma
+   "pérola" (orçamento baixo, crítica alta) com descrições de dificuldade parecida. Nunca duas do mesmo gênero.
+4. **Ganchos narrativos**: se você já trabalhou com um diretor, ele pode voltar ("o diretor dos 127
+   takes te quer de novo. Diz que mudou."). Se tem flag de franquia, a sequência aparece como obrigação.
+5. **Semente determinística**: mesma seed → mesmas ofertas (desafio diário, link "jogue a mesma vida").
+
+### 2.6 Como o resultado é calculado
+O **filme** já aconteceu; a história não muda. O que muda é **você dentro dele**.
+
+```
+filme (fixo, da base):  crítica (RT/Metacritic), bilheteria/orçamento, prêmios do filme, reputação hoje
+papel (fixo, da base):  posição no elenco, o ator original foi indicado/ganhou?, exigência (drama 4, ação 1)
+você (variável):        Talento vs exigência, Heat, Estabilidade, sorte
+
+resultado pessoal (rolagem):
+  "Indicado(a)" / "Ganhou"      se o papel original foi premiado E Talento passa no teste
+  "Roubou a cena"                papel pequeno, Talento alto, roll
+  "Fez o trabalho"               neutro
+  "Passou batido"                filme flopou e você junto
+  "Miscast"                      papel exigente, Talento baixo: "a crítica te escolheu como o problema"
+  "Razzie"                       Talento ≤ 2 em papel que já era alvo (dados reais de Razzies)
+```
+- Fama += f(bilheteria, posição no elenco). Prestígio += f(crítica, prêmios). Dinheiro += cachê
+  estimado pela faixa e época (corrigido pela inflação, mostrado em dólares da época e de hoje).
+- 10% de variância deliberada: às vezes você é indicado por um filme ruim. Hollywood é assim.
+- **Revisão histórica**: ~50 filmes curados cuja reputação virou (O Iluminado, Blade Runner, Clube
+  da Luta, Crash ao contrário). Eles geram um card tardio que recalcula Prestígio. É a mecânica mais
+  cinéfila do jogo.
+
+### 2.7 Pessoas reais: o que pode e o que não pode
+Política em três camadas, para o jogo ser divertido sem virar processo:
+
+| Camada | Pode nomear? | Exemplos |
+|---|---|---|
+| **A — Fatos de obra** | Sempre | Filmes, diretores, co-stars, bilheteria, crítica, prêmios, duração de filmagem, número de takes documentado, quem recusou o papel. |
+| **B — Fatos públicos e documentados sobre a pessoa** | Sim, com enquadramento factual e sem inventar nada | Condenações (o produtor condenado em 2020 e 2022), feudos públicos, o tapa de 2022, falência declarada, greves, declarações públicas. |
+| **C — Vício, sexo, crime, doença inventados** | **Nunca com nome real** | A balada com cocaína, o romance com a co-star, o culto, o agente que rouba, "a co-star que chegou 4 horas atrasada com um lêmure". Esses eventos usam personagens **fictícios ou compostos** ("o anfitrião da festa", "uma igreja com muitos famosos"), ou acontecem só com você. |
+
+Regras práticas:
+- Pessoas falecidas: menos risco legal, mas o mesmo bom gosto (Kubrick pode ser "o diretor dos 127
+  takes"; não pode ser acusado de nada que não esteja documentado).
+- Nunca atribuir romance a pessoa real. A co-star real é só colega de cena; o amor da sua vida é fictício.
+- Disclaimer na home e no card: fan-made, não afiliado, sátira, dados de TMDB/OMDb.
+- Antes de monetizar: uma hora com um advogado. Enquanto for não comercial, a licença gratuita do TMDB
+  cobre os dados (com atribuição obrigatória). **Pôsteres são dos estúdios**, não do TMDB: usar
+  dentro do jogo com atribuição é prática comum; **no card compartilhável, só texto e tipografia própria**.
+
+### 2.8 Mais exemplos de descrição → revelação (para calibrar o tom)
+
+| Descrição às cegas | Revelação | Dado real que o jogo usa |
+|---|---|---|
+| "Um diretor britânico que não tem celular nem e-mail quer você num filme sobre sonhos dentro de sonhos. Você vai lutar num corredor que gira. Orçamento de US$ 160 mi." | **A Origem (2010)**, Christopher Nolan, papel de Joseph Gordon-Levitt | US$ 836 mi de bilheteria; 4 Oscars técnicos; nenhum de atuação → "Fez o trabalho, Fama +++, Prestígio +" |
+| "O quinto filme de um universo compartilhado de heróis. Seu papel: a estagiária de ciência que faz piadas. Contrato de mais aparições." | **Thor (2011)**, Kenneth Branagh, papel de Kat Dennings | Franquia: Fama +, Dinheiro ++, Prestígio −, flag `franquia` |
+| "Um estúdio com logo em serifa quer você num terror sobre luto, filmado em Utah, cheio de casinhas em miniatura. Sem dinheiro. Você vai gritar muito." | **Hereditary (2018)**, Ari Aster, papel de Toni Collette | US$ 10 mi → US$ 80 mi; crítica 89%; Collette **não** foi indicada → "A crítica diz que você foi roubada". Prestígio ++, Estabilidade −2 |
+| "Um diretor de 80 anos vai fazer 'o último filme dele' (de novo). Três horas e meia sobre um crime esquecido em Oklahoma. Set cheio de gente que você quer conhecer." | **Assassinos da Lua das Flores (2023)**, Martin Scorsese, papel de Lily Gladstone | 10 indicações, 0 vitórias → "Indicada. Perdeu na noite. Todo mundo achou injusto." Prestígio +++ |
+| "Um comediante leva os amigos para filmar no Havaí. Ninguém sabe se é filme ou férias. Você tem perda de memória." | **Como Se Fosse a Primeira Vez (2004)**, Adam Sandler, papel de Drew Barrymore | US$ 196 mi; crítica 45% → Fama ++, Prestígio −1, flag `turma_do_sandler` (ofertas garantidas para sempre) |
+| "Um diretor dinamarquês que faz as atrizes chorarem de verdade quer você como operária que está ficando cega. É um musical. Você não é cantora. Ela é." | **Dançando no Escuro (2000)**, Lars von Trier, papel de Björk | Palma de Ouro + Melhor Atriz em Cannes; a atriz original jurou nunca mais atuar → Prestígio +++, Estabilidade −4 |
+| "Remake de um remake de um terror japonês. O estúdio chama de 'reimaginação'." | **O Grito (2020)**, papel de Andrea Riseborough | Crítica 20%; US$ 49 mi em US$ 10 mi → "Passou batido" |
+| "Biopic de um cantor morto. Dentes falsos. O diretor vai ser demitido no meio e o filme vai ganhar Oscar mesmo assim." | **Bohemian Rhapsody (2018)**, papel de Rami Malek | Crítica 60%, US$ 910 mi, 4 Oscars incl. Melhor Ator → "Ganhou. A crítica odiou o filme. Você não liga." |
+| "Um filme de ação cujo astro faz as próprias acrobacias e quebrou o tornozelo pulando entre prédios. Você só precisa de um bigode. O bigode vai causar problemas em OUTRO filme." | **Missão: Impossível — Efeito Fallout (2018)**, papel de Henry Cavill | Fama ++, Dinheiro ++, meme eterno (`bigode_digital`) |
+| "Um diretor coreano quer você num trem que nunca para, dividido em classes sociais. Você come barras de proteína." | **Expresso do Amanhã (2013)**, Bong Joon-ho, papel de Chris Evans | Cult: Prestígio ++, Fama +0, flag `cinéfilo` |
+| "Um produtor cuja campanha de Oscar é mais agressiva que o filme quer você numa comédia romântica de época sobre um dramaturgo." | **Shakespeare Apaixonado (1998)**, produção Miramax, papel de Gwyneth Paltrow | Oscar de Melhor Atriz e Melhor Filme → Prestígio +++; flag `trabalhou_com_o_produtor` que explode como card em 2017 ("A reportagem sai. Jornalistas perguntam o que você sabia.") |
+
+**Pessoas recorrentes reais** (camada A/B): diretores-autores com múltiplos filmes na janela de anos
+(Scorsese, Spielberg, Nolan, Fincher, Tarantino, Coppola, Allen — este com card de contexto 2014+,
+Kubrick, Cameron, Bigelow, Campion, Greta Gerwig, Jordan Peele, Villeneuve, Lanthimos, Almodóvar…).
+Cada um tem **3 níveis de descrição** (difícil → óbvio) e uma personalidade mecânica
+(takes, duração de set, chance de prêmio, efeito em Estabilidade).
+
+**Pessoas fictícias** (camada C): agente, empresário, co-star caótica, guru do culto, anfitrião da
+festa, o amor da sua vida, o veterano generoso que te apadrinha (pode ser real se só fizer coisas boas).
+
+---
+
+## 3. Criação de personagem
+
+### 3.1 Point buy — 5 atributos, 12 pontos, cada um de 1 a 5
 
 | Atributo | O que faz | Exemplo de "porta" que abre |
 |---|---|---|
-| **Beleza** | Testes de elenco para galã/musa, comerciais, capa de revista. Decai com a idade a menos que você "invista" (cirurgia, personal, pacto). | "[Beleza 4] O diretor te escala sem teste." |
-| **Talento** | Chance de crítica boa, prêmios, sobreviver a um roteiro ruim. Cresce com trabalho em teatro, indie e professores. | "[Talento 4] Improvisa a cena e o diretor mantém." |
-| **Contatos** | Quantidade e qualidade das ofertas. Salva você em escândalos. Nepo babies começam alto. | "[Contatos 3] Ligar para o padrinho produtor." |
-| **Carisma** | Entrevistas, talk shows, fãs, redes. Transforma fama em dinheiro e flop em "divertido". | "[Carisma 4] Vira o escândalo em piada no late show." |
-| **Juízo** | Resistência a vício, golpe, culto e tweet às 3h da manhã. O atributo que todo mundo zera e se arrepende. | "[Juízo 2] Você não percebeu que era uma pirâmide." |
+| **Beleza** | Ofertas de galã/musa, comerciais, capa. Decai aos 35/45/55 (compensável). | "[Beleza 4] O diretor te escala sem teste." |
+| **Talento** | Chance de crítica boa, prêmios, sobreviver a roteiro ruim. Cresce com teatro, indie, professores. | "[Talento 4] Improvisa e o diretor mantém." |
+| **Contatos** | Quantidade/qualidade de ofertas e **quanto você enxerga antes de escolher** (2.3). Salva em escândalos. | "[Contatos 5] Você sabe quem é o diretor." |
+| **Carisma** | Entrevistas, fãs, talk shows. Transforma flop em "divertido". Revela co-stars. | "[Carisma 4] Vira o escândalo em piada no late show." |
+| **Juízo** | Resistência a vício, golpe, culto e tweet às 3h. Revela sinais de alerta de produção. | "[Juízo 2] Você não percebeu que era uma pirâmide." |
 
-Opcional: um sexto atributo oculto **Sorte** (1–3), sorteado, que o jogador só descobre no card final ("Sorte: 1 — você nunca teve chance").
+Opcional: **Sorte** oculta (1–3), sorteada, revelada só no card final.
 
-### 1.2 Origem (escolha 1 — define o primeiro ato)
+### 3.2 Origem (define o primeiro ato)
 
-| Origem | Bônus | Ônus | Eventos exclusivos |
+| Origem | Bônus | Ônus | Evento exclusivo |
 |---|---|---|---|
-| **Nepo baby** | Contatos +2, começa com agente | Crítica desconfia (Prestígio começa negativo), "sobrenome" vira meme | "Jornalista pergunta se você teria chegado aqui sem o sobrenome" |
-| **Teatro de Nova York** | Talento +1, Prestígio inicial | Sem dinheiro, 28 anos ao chegar em LA | "Um amigo do off-Broadway virou showrunner" |
-| **Ex-criança estrela** | Fama inicial alta, dinheiro | Vício começa em 1, pais gastaram seu dinheiro | "Seu ex-colega de sitcom morreu. A imprensa quer declaração." |
-| **Modelo** | Beleza +1, contatos de moda | Ninguém te leva a sério por 10 anos | "Um diretor europeu quer você num filme sem falas" |
-| **Influencer** | Fama instantânea, dinheiro de publi | Zero Prestígio, cancelamentos retroativos (tweets de 2012) | "Uma plataforma de streaming quer um filme de Natal com você" |
-| **Garçom/garçonete em LA** | O clássico. Nada de bônus, mas +1 ponto extra no point buy | Começa a carreira aos 22 lavando prato | "Um cliente deixa um cartão de visita e uma gorjeta de 3 dólares" |
-| **Comediante de stand-up** | Carisma +1 | Pigeonhole: só ofertas de comédia até provar o contrário | "Uma piada antiga sua ressurge" |
-| **Ex-atleta / lutador** | Beleza (físico), fama de nicho | Talento começa em 1 | "Uma franquia de ação com carros precisa de um músculo novo" |
-| **Imigrante com sotaque** | Talento +1 (teatro no país de origem) | Só papéis de vilão/terrorista/empregada até virar o jogo | "O estúdio quer que você 'suavize' o sotaque" |
+| **Nepo baby** | Contatos +2, agente desde o início | Prestígio começa negativo; o sobrenome vira meme | "Jornalista pergunta se você teria chegado aqui sem o sobrenome" |
+| **Teatro de Nova York** | Talento +1, Prestígio inicial | Sem dinheiro, chega em LA aos 28 | "Um amigo do off-Broadway virou showrunner" |
+| **Ex-criança estrela** | Fama e dinheiro iniciais | Vício começa em 1; os pais gastaram seu dinheiro | "Seu ex-colega de sitcom morreu. A imprensa quer declaração." |
+| **Modelo** | Beleza +1 | Ninguém te leva a sério por 10 anos | "Um diretor europeu quer você num filme sem falas" |
+| **Influencer** (só estreia ≥ 2012) | Fama instantânea | Zero Prestígio; tweets de 2012 | "Um streaming quer um filme de Natal com você" |
+| **Garçom/garçonete em LA** | +1 ponto no point buy | Começa aos 22 lavando prato | "Um cliente deixa um cartão e uma gorjeta de 3 dólares" |
+| **Stand-up** | Carisma +1 | Só comédia até provar o contrário | "Uma piada antiga sua ressurge" |
+| **Ex-atleta** | Físico, fama de nicho | Talento 1 | "Uma franquia de carros precisa de um músculo novo" |
+| **Imigrante com sotaque** | Talento +1 | Só vilão/terrorista/empregada até virar o jogo | "O estúdio quer que você 'suavize' o sotaque" |
 
-### 1.3 Era (toggle avançado, v2)
-Começar nos anos 50 (sistema de estúdio, contratos de 7 anos, casamentos arranjados pelo estúdio), 70 (Nova Hollywood, cocaína), 90 (indie boom, Miramax), 2010 (franquias, streaming, #MeToo), 2020 (TikTok, greve, IA). Cada era muda os eventos, os arquétipos e os finais possíveis. **Para o MVP, só a era 2000–2040.**
+### 3.3 Ano de estreia
+Ver 2.4. A era muda as ofertas, os eventos de contexto e os finais possíveis (não existe "podcast de
+4 horas" em 1985; existe "programa de rádio de madrugada").
 
 ---
 
-## 2. Recursos ocultos (a "máquina" por trás)
-
-O jogador vê só os 5 atributos. Por baixo, o jogo acompanha ~10 medidores que decidem o final:
+## 4. Medidores ocultos
 
 | Medidor | Escala | Sobe com | Desce com |
 |---|---|---|---|
-| **Fama** | 0–100 | Blockbuster, escândalo, talk show, relacionamento famoso | Anos sem lançar, idade (para mulheres o jogo deixa isso explícito: é sátira) |
-| **Prestígio** | −20 a 100 | Crítica, festival, indie, teatro, diretor-autor | Franquia nº 7, filme de Natal, propaganda de cassino online |
-| **Dinheiro** | $ | Cachê, franquia, publi, marca de tequila | Divórcio, impostos, empresário ladrão, mansão, cavalos |
-| **Heat** (momento) | 0–10 | Qualquer notícia. Decai sozinho a cada ano | Tempo. É o recurso mais volátil. |
-| **Estabilidade** (saúde mental) | 0–10 | Família, terapia, amigos fora da indústria, hobby | Flop, tabloide, solidão, 4 filmes num ano |
-| **Vício** | 0–10 | Balada, co-star "divertido", dor crônica de filme de ação | Reabilitação, sobriedade, religião |
-| **Reputação na indústria** | −5 a +5 | Ser fácil de trabalhar, não atrasar | Gritar com assistente, abandonar set, processar estúdio |
-| **Rede** | lista | Cada pessoa com quem você trabalhou vira um "contato" com humor | Pontes queimadas |
-| **Pipeline** | lista | Projetos assinados que ainda não estrearam | Cada estreia resolve um |
-| **Bagagem** | flags | Tweet antigo, processo, ex vingativo, foto comprometedora, culto | Nunca desce. Só explode ou não. |
+| **Fama** | 0–100 | Bilheteria, escândalo, talk show | Anos sem lançar; idade (o jogo deixa explícito o duplo padrão de gênero, de propósito) |
+| **Prestígio** | −20 a 100 | Crítica, festival, autor, teatro, revisão histórica | Franquia nº 7, filme de Natal, propaganda |
+| **Dinheiro** | $ | Cachê, franquia, publi, tequila | Divórcio, impostos, empresário ladrão, cavalos |
+| **Heat** | 0–10 | Qualquer notícia; decai 1/ano | Tempo |
+| **Estabilidade** | 0–10 | Família, terapia, amigos fora da indústria | Flop, tabloide, diretor tirano, 4 filmes num ano |
+| **Vício** | 0–10 | Balada, dor crônica de set de ação | Reabilitação, sobriedade |
+| **Reputação na indústria** | −5 a +5 | Ser fácil de trabalhar | Abandonar set, processar estúdio |
+| **Rede** | lista | Cada pessoa real com quem trabalhou (reaparece) | Pontes queimadas |
+| **Pipeline** | lista | Filmes assinados, ainda não estreados | Cada estreia resolve um |
+| **Bagagem** | flags | Tweet antigo, processo, foto, culto, `trabalhou_com_o_produtor` | Nunca desce. Explode ou não. |
 
-**Idade** avança a cada rodada. Beleza perde 1 ponto efetivo aos 35, 45, 55 (compensável).
+Idade avança a cada card. Beleza efetiva −1 aos 35, 45, 55.
 
 ---
 
-## 3. Estrutura temporal (a run)
+## 5. Estrutura temporal
 
-~25 cards, divididos em 5 atos. Cada ato tem 1 card de "projeto", 1–2 de "pessoa", 1–2 de "vida", 1 de "imprensa/temporada de prêmios" e cards aleatórios da fila de eventos.
+~25 cards em 5 atos de 6 anos. Cada ato: 3 projetos (reais), 1–2 pessoas, 1–2 vida, 1 imprensa/prêmios,
+mais cards de contexto histórico quando o ano chega.
 
 | Ato | Idade | Tema | Pergunta dramática |
 |---|---|---|---|
 | **I. A Chegada** | 20–25 | Testes, agente, primeiro papel, aluguel | Você vai entrar? |
-| **II. A Ascensão** | 26–32 | Primeiro hit ou primeiro flop, franquia vs. indie, primeiro escândalo | Que tipo de estrela você é? |
-| **III. O Auge** | 33–42 | Prêmios, poder, produção própria, casamento, filhos, vício no pico | O que você faz com o poder? |
-| **IV. A Virada** | 43–55 | Ofertas secam, reinvenção, TV, diretor, "e aí, lembra de mim?" | Você aceita envelhecer? |
-| **V. O Legado** | 56+ | Comeback tardio, prêmio honorário, memórias, saída de cena | Como vão te lembrar? |
+| **II. A Ascensão** | 26–31 | Primeiro hit ou flop; franquia vs. indie; primeiro escândalo | Que tipo de estrela você é? |
+| **III. O Auge** | 32–37 | Prêmios, poder, produção própria, casamento, vício no pico | O que você faz com o poder? |
+| **IV. A Virada** | 38–43 | Ofertas secam; TV, direção, reinvenção | Você aceita envelhecer? |
+| **V. O Legado** | 44–50+ | Comeback, prêmio honorário, memórias, revisão histórica | Como vão te lembrar? |
 
-**Morte súbita**: eventos de OD, acidente de set, voo particular e "pelado na rua" podem encerrar a run em qualquer ato. Como no Volante de Ouro, há um toggle **"Modo Realista"** que liga as mortes; desligado, o pior que acontece é reabilitação.
-
-**Pipeline (a mecânica mais importante do jogo)**: um projeto escolhido no Ato II estreia no Ato III. O resultado (hit / flop / cult / "sumiu do streaming") é rolado na estreia, com base no que você escolheu + Talento + diretor + sorte. Isso cria o drama de "eu recusei o filme de super-herói para fazer o drama sobre um faroleiro... e o faroleiro ganhou 4 Oscars" ou "e o faroleiro foi direto pro catálogo de avião".
+**Morte súbita** (OD, acidente, voo particular) só com **Modo Realista** ligado, como no Volante.
 
 ---
 
-## 4. Tipos de card
+## 6. Tipos de card
 
-### 4.1 Projetos (o coração)
-Sempre 2 ou 3 ofertas, descritas sem nome e sem título. Cada uma tem **cachê**, **risco**, **tempo até estrear** e **ícones de potencial** (💰 bilheteria, 🏆 prêmio, 🔮 cult, 🧨 escândalo).
+### 6.1 Projetos (reais — ver seção 2)
+Sempre 2 ou 3 ofertas às cegas, com cachê, risco, tempo até estrear e ícones de potencial
+(💰 bilheteria, 🏆 prêmio, 🔮 cult, 🧨 escândalo). Os ícones são calculados dos dados reais com ruído
+(nunca exatos, senão vira planilha). Ofertas não cinematográficas também são reais quando possível:
+"apresentar o programa de humor de sábado à noite", "jurado(a) de um reality de dança", "voz do
+guaxinim numa franquia espacial" (Guardiões da Galáxia, 2014, papel de Bradley Cooper).
 
-Exemplos de descrição (reconhecíveis, nunca nomeados):
-- "Um diretor britânico obcecado por tempo não-linear quer você num filme de 3 horas que ninguém vai entender e todo mundo vai dizer que entendeu. Você vai filmar pendurado de cabeça para baixo. De verdade."
-- "O quinto filme de uma franquia sobre um grupo de heróis com capa. Seu personagem: 'Cientista nº 2'. Mas é um contrato de 6 filmes."
-- "Um estúdio independente com logo em serifa quer você num terror sobre luto, filmado numa casa em Vermont. Sem dinheiro, mas o pôster vai ser lindo."
-- "Um diretor italiano-americano de 80 anos vai fazer 'o último filme dele' (de novo). Papel pequeno. Set cheio de gente que você quer conhecer."
-- "Um filme de Natal para um canal a cabo. Você vai se apaixonar por um dono de fazenda de árvores de Natal. Grava em 11 dias. Paga o aluguel de 2 anos."
-- "Uma comédia de um ex-humorista de TV que leva os amigos para filmar no Havaí. Ninguém sabe se é filme ou férias."
-- "Um diretor dinamarquês que faz as atrizes chorarem de verdade. Festival garantido. Terapia garantida."
-- "Remake de um filme japonês que já teve remake. O estúdio chama de 'reimaginação'."
-- "Um biopic de um músico morto. Prótese de nariz, 30 kg a mais, 14 meses de preparação. É isca de Oscar e todo mundo sabe."
-- "Um filme de ação que exige que você faça as próprias acrobacias porque o astro do filme anterior fez. Ele tem uma igreja. Você não."
-- "Um reality de competição de dança como jurado(a)."
-- "Papel de voz num filme de animação sobre um guaxinim. Três dias de gravação. Royalties eternos."
-- "Um filme de IA onde você vende sua imagem e não precisa aparecer no set." *(evento 2030+)*
+### 6.2 Pessoas
+- **Reais (camada A/B)**: diretores, produtores, co-stars, apresentadores. Têm efeitos persistentes
+  (Talento +1 permanente depois de sobreviver a Kubrick; `turma_do_sandler`; `trabalhou_com_o_produtor`).
+- **Fictícias (camada C)**: agente do porão (20%), agente-tubarão, empresário que também é sua mãe,
+  co-star caótica, guru, o veterano generoso, o amor da sua vida. Instanciadas com variações e nome
+  descritivo persistente ("o agente da lavanderia").
 
-### 4.2 Pessoas (com quem trabalhar / conviver)
-Arquétipos com personalidade e efeitos persistentes. Trabalhar com alguém adiciona a pessoa à sua **Rede**, e ela reaparece.
+### 6.3 Vida pessoal (fictícia, com cenário real)
+- **A balada**: "Depois da festa de Oscar de uma revista, alguém te chama para a continuação nas colinas."
+  Ir / não ir / ir e sair cedo [Juízo 3]. Rolagem: conhece produtor (Contatos +), conhece o amor da sua
+  vida, conhece cocaína (Vício +2), conhece um guru, foto vaza, nada acontece e você segura um copo 2h.
+- **Relacionamentos** (sempre fictícios): civil (Estabilidade ++), músico (casamento em Vegas, 55 horas),
+  alguém 25 anos mais novo (tabloide). Divórcio = Dinheiro −50%.
+- **Filhos**: Estabilidade +2; ofertas −1 por 3 anos para mulheres, 0 para homens (sátira explícita).
+- **Família**: pais pedem dinheiro; irmão quer ser seu empresário; pai escreve livro.
+- **Culto**: "Uma amiga te convida para um centro com cursos de 'autoconhecimento'. Metade do elenco
+  de uma franquia frequenta." (Sem nome. Todo mundo vai entender.)
+- **Dinheiro**: tequila, skincare, cripto (só ≥ 2017), restaurante, time de futebol galês (≥ 2020), vinícola.
+- **Saúde**: lesão em set de ação → opioides; cirurgia (Beleza +1 agora, −2 aos 50, Heat +); burnout.
 
-| Arquétipo (descrição no jogo) | Efeito ao trabalhar | Risco oculto |
-|---|---|---|
-| **O gênio tirano** — "Faz 97 takes da mesma cena. Chama isso de respeito pelo cinema." | Prestígio +, Talento +1 permanente, Estabilidade −2 | 15% de você sair do set e queimar ponte |
-| **O produtor dos abraços longos** — "Marca reuniões em suítes de hotel. Todo mundo sabe. Ninguém fala." | Ofertas melhoram muito | Flag Bagagem. Quando o escândalo dele estourar (Ato III), você é perguntado(a) sobre o que sabia |
-| **O astro da igreja** — "Sorri o tempo todo. Corre em todas as cenas. Te convida para um 'centro' em Hollywood Blvd." | Franquia garantida, Dinheiro +++ | Caminho do culto (ver 6.4) |
-| **A co-star caótica** — "Linda, talentosa, chegou 4 horas atrasada e trouxe um lêmure." | Heat ++, Fama + | Vício +2, 20% de romance |
-| **O diretor-autor sombrio** — "Cada filme dele é sobre uma mulher sofrendo. A crítica ama. As atrizes, menos." | Prestígio ++, chance de prêmio | Estabilidade −3 |
-| **O agente-tubarão** — "Fecha contratos antes de você ler. 'Confia.'" | Dinheiro ++, ofertas ++ | 10%/ano de ele roubar tudo |
-| **O ex-colega de teatro que virou showrunner** | Oferta de série garantida | Ciúme: se você ficar mais famoso, ele te mata na 2ª temporada |
-| **O humorista com o grupo de amigos** | Trabalho garantido pelo resto da vida | Prestígio congela |
-| **O veterano generoso** — "Ganhou tudo. Te chama de 'garoto(a)'. Te apresenta a todo mundo." | Contatos +1 permanente | Nenhum. É o único. Morre no Ato IV e você fala no funeral (evento) |
-| **O diretor que só filma em película e grita 'filme é morrer'** | Cult garantido | Bilheteria zero |
-| **O jovem diretor da internet** | Heat ++ | 50% de ser genial, 50% de o filme ser um TikTok de 2h |
-| **O empresário que também cuida dos seus pais** | Dinheiro organizado (+) | Ele é a mãe. Ela gasta tudo. (origem: ex-criança estrela) |
+### 6.4 Imprensa & premiações
+- **Temporada de prêmios**: se você tem filme com 🏆 no ano, rola indicação com Prestígio + Campanha ($).
+  Os concorrentes são os **indicados reais daquele ano** ("você perdeu para Meryl Streep. De novo.").
+- **O discurso**: agradecer / político / esquecer o cônjuge / chorar demais (meme: Fama +, Prestígio −).
+- **A entrevista**: sobre co-star problemático, sobre o sobrenome. "[Carisma 4] fazer piada".
+- **Tabloide**: templates com slots (ver 11).
+- **Cards de contexto real**: greve de 2007 ("sua série para"), #MeToo 2017 ("o que você sabia?"),
+  pandemia 2020 ("seu filme vai direto para streaming"), IA 2023 ("o estúdio quer escanear seu rosto").
 
-### 4.3 Vida pessoal
-- **A balada**: "Um astro de uma franquia de carros te chama para uma festa nas colinas." Opções: ir / não ir / ir e sair cedo [Juízo 3]. Resultados na festa (roll): conhece produtor (Contatos +), conhece o amor da sua vida (flag Relacionamento), conhece cocaína (Vício +2), conhece um guru (Culto), foto vaza (Heat +, Bagagem), nada acontece e você fica 2h segurando um copo.
-- **Relacionamentos**: com co-star (Heat ++, Estabilidade variável), com civil (Estabilidade ++, Fama 0), com alguém 25 anos mais novo (tabloide), com músico (casamento em Las Vegas, 55 horas). Casamento → divórcio é um evento com cálculo de Dinheiro −50%.
-- **Filhos**: Estabilidade +2, ofertas −1 por 3 anos (mulheres), 0 (homens — sátira explícita). Desbloqueia o final "Mãe/pai que largou tudo" e o evento "seu filho(a) quer ser ator".
-- **Família de origem**: pais pedem dinheiro; irmão quer ser seu empresário; pai escreve livro.
-- **Religião/culto**: "Uma amiga te convida para um centro com cursos de 'autoconhecimento'. Metade do elenco de uma franquia frequenta."
-- **Política**: discurso em premiação (Prestígio ou cancelamento), campanha, candidatura a governador (final).
-- **Dinheiro**: marca de tequila, skincare, cripto, restaurante, time de futebol galês, vinícola.
-- **Saúde**: lesão em set de ação (dor crônica → opioides), cirurgia plástica (Beleza +1 agora, −2 aos 50 e Heat + por "o que ela fez no rosto"), burnout.
-
-### 4.4 Imprensa & premiações
-- **Temporada de prêmios** (1 card por ato a partir do II): se você tem filme com 🏆 no ano, rola indicação com base em Prestígio + Campanha ($). Pode "fazer campanha" (Dinheiro −, chance +) ou "ficar acima disso" (Prestígio +1, chance −).
-- **O discurso**: agradecer a família / fazer discurso político / esquecer o cônjuge / chorar demais (meme eterno: Fama +, Prestígio −).
-- **A entrevista**: pergunta sobre co-star problemático, sobre o sobrenome, sobre o passado. Opções honestas, evasivas, ou "[Carisma 4] fazer piada".
-- **O tabloide**: romance inventado, briga em restaurante, foto de biquíni "o corpo de X aos 50".
-- **A noite do tapa**: evento do Ato III: alguém faz piada com seu cônjuge na premiação. Reagir (Fama ++, Prestígio −−, banido 10 anos) / rir (nada) / chorar no banheiro [Estabilidade].
-
-### 4.5 Cards de "destino" (raros, 1 por run)
-Eventos que alteram a direção toda: vazamento de fotos, acusação (verdadeira ou falsa — o jogo decide pelo seu histórico de Bagagem), herança, acidente de avião (sobreviveu? toggle Realista), convite para dirigir, gravidez, diagnóstico, "um diretor coreano quer você num filme sobre classes sociais".
+### 6.5 Cards de destino (raros, 1 por run)
+Vazamento, acusação (o jogo decide pelo seu histórico de Bagagem), herança, acidente de avião
+(Realista), convite para dirigir, gravidez, diagnóstico, "um diretor coreano te quer".
 
 ---
 
-## 5. Sistema de resolução
+## 7. Sistema de resolução
 
-### 5.1 Formato do card
-```
-[Ato II • 29 anos • Heat ▮▮▮▯▯]
-
-"Uma diretora que você admira quer você num filme de orçamento
-de um sofá. Ao mesmo tempo, seu agente ligou: a franquia dos
-heróis com capa quer um 'Cientista nº 2'. Contrato de 6 filmes."
-
-◀ O sofá                            A capa ▶
-   💵 nada  🏆 40%  🔮 25%            💵 $$$$  🏆 2%  🧨 15%
-   estreia em 2 anos                  estreia em 1 ano
-                                      (preso por 9 anos)
-
-   [Contatos 4] ▲ Fazer os dois. Seu agente vai fazer caber.
-```
-- 2 opções principais (swipe) + 1 opção "de atributo" que só aparece se você tem o requisito. Isso faz o point buy importar visivelmente.
-- Probabilidades **mostradas** para projetos; **ocultas** para vida pessoal (ninguém sabe a chance de o relacionamento dar certo).
-
-### 5.2 Tipos de efeito (roubado do Copero, estendido)
-- **Imediato**: Fama +10, Dinheiro +$2M.
-- **Diferido**: "quando este filme estrear".
-- **Permanente**: Talento +1, "Beleza não decai aos 45".
-- **Multiplicador**: "chance de indicação ×2 nos próximos 3 anos".
-- **Flag**: Bagagem, Rede, Relacionamento, Culto, Sobriedade.
-- **Troca de papel**: de galã para "ator de caráter"; de protagonista para "o pai da protagonista"; de atriz para diretora.
-
-### 5.3 Cálculo de estreia
-```
-qualidade = talento*0.3 + diretor.qualidade*0.4 + roteiro(roll)*0.3
-bilheteria = heat*0.3 + franquia*0.4 + beleza*0.1 + marketing(roll)*0.2
-→ HIT (ambas altas) | ISCA DE OSCAR (qualidade) | PIPOCA (bilheteria)
-  | CULT (qualidade alta, bilheteria zero, roll 20%) | FLOP | DIRETO PRO CATÁLOGO
-```
-Com uma **variância alta de propósito**: 10% de todo projeto virar o oposto do esperado. É o que gera as histórias.
-
-### 5.4 Decaimento
-A cada rodada: Heat −1; Fama −3 se não lançou nada; Vício +1 se Vício ≥ 5 e Estabilidade ≤ 3 (a espiral); Beleza efetiva por idade.
+- **2 opções principais (swipe) + 1 opção de atributo** que só aparece com requisito
+  ("[Contatos 4] Fazer os dois. Seu agente vai fazer caber.").
+- **Probabilidades mostradas** em projetos (com ruído); **ocultas** em vida pessoal.
+- **Tipos de efeito**: imediato, diferido ("quando estrear"), permanente, multiplicador, flag, troca de papel
+  (galã → "ator de caráter" → "o pai da protagonista").
+- **Decaimento** por rodada: Heat −1; Fama −3 se não lançou; Vício +1 se Vício ≥ 5 e Estabilidade ≤ 3.
+- **Cálculo de estreia**: seção 2.6.
 
 ---
 
-## 6. Caminhos (os arcos que emergem)
+## 8. Caminhos emergentes
 
-Não são escolhidos; o jogo detecta pelo estado. Mas o conteúdo deve garantir que cada um tenha uma "espinha" de 4–6 eventos.
+Detectados pelo estado, não escolhidos. Cada um precisa de uma "espinha" de 4–6 eventos.
 
-### 6.1 A Lenda
-Talento alto, recusou franquia 2x, trabalhou com 3 autores, sobreviveu a 1 flop. Final: **EGOT / Prêmio honorário / Estátua no AFI**.
-
-### 6.2 O Rei da Franquia
-Aceitou contrato de 6 filmes. Dinheiro infinito, Prestígio zero. Eventos: "fãs te odeiam pelo filme 4", "o estúdio quer te rejuvenescer digitalmente", "você tenta fazer indie e a crítica diz 'tentou'". Finais: **Bilionário aposentado em Malibu**, **Comeback tardio (ganha o Oscar aos 55 num filme sobre um lutador decadente)**, **Preso ao contrato até morrer**.
-
-### 6.3 A Espiral
-Vício ≥ 7. Eventos: atraso em set, demissão, foto do tabloide, reabilitação ("sai 30 dias depois dizendo que mudou"), recaída, amigo morre, intervenção de um ator de comédia que virou sério. Finais: **OD** (Modo Realista), **Sóbrio e dono de uma fazenda de alpacas**, **O da rua** (pelado, Sunset Blvd, gritando que o filme de 2009 era sobre você), **Reality de celebridades em reabilitação**.
-
-### 6.4 O Culto
-Aceitou o convite do "centro". Eventos: subir de nível, recrutar co-star, cônjuge quer sair, documentário expõe. Finais: **Porta-voz da igreja em cruzeiro**, **Fugiu e escreveu livro (best-seller + processo)**, **Nível máximo — ninguém mais te vê**.
-
-### 6.5 O Cancelado
-Bagagem explodiu. Opções: pedido de desculpas em vídeo com fundo cinza, "não vou me desculpar", sumir 3 anos. Finais: **Especial de comédia 'não posso dizer mais nada'**, **Podcast de 4 horas**, **Comeback com diretor de prestígio ("a redenção")**, **Esquecido**.
-
-### 6.6 A Reinvenção
-Ato IV sem ofertas. Opções: TV ("a série de prestígio de domingo"), dirigir, produzir, Broadway, dublagem, filme de Natal, política, negócios. Finais: **Diretor(a) premiado(a)**, **Dona do estúdio**, **Governador(a)**, **Rei(rainha) do filme de Natal (47 filmes)**, **A voz do guaxinim (3 gerações de crianças)**.
-
-### 6.7 O Esquecido
-Fama caiu a 0 sem escândalo. É o final mais comum e precisa ser escrito com carinho: "Um dia, numa fila de farmácia, alguém diz: 'você não era…?' Você diz que não. É mais fácil."
-
-### 6.8 A indústria adulta
-Dinheiro < 0, Fama residual, Beleza ≥ 3, Juízo ≤ 2 em algum momento. Caminho de 3 eventos (a oferta "artística", a oferta não-artística, a entrevista 10 anos depois). Final: **"Ex-estrela de sitcom" (título de documentário)**. Tratar com humor, nunca com desprezo pelo trabalho sexual em si: a piada é Hollywood, não a pessoa.
-
-### 6.9 O Civil
-Largou tudo no Ato III para criar filhos / virar professor de teatro / casar com dentista. Final: **"Hoje dá aula em Ohio e é feliz. Sério."** — o final secretamente mais raro e um achievement ("Saiu enquanto podia").
+1. **A Lenda** — Talento alto, recusou franquia 2x, trabalhou com 3 autores, sobreviveu a um flop.
+2. **O Rei da Franquia** — contrato de 6 filmes; "fãs te odeiam pelo filme 4"; "rejuvenescer digitalmente".
+3. **A Espiral** — Vício ≥ 7: atraso, demissão, tabloide, reabilitação, recaída, intervenção.
+4. **O Culto** — níveis, recrutar co-star, cônjuge quer sair, documentário.
+5. **O Cancelado** — vídeo de desculpas com fundo cinza / "não vou me desculpar" / sumir 3 anos.
+6. **A Reinvenção** — Ato IV sem ofertas: TV de prestígio, dirigir, Broadway, Natal, política.
+7. **O Esquecido** — Fama 0 sem escândalo. "Numa fila de farmácia: 'você não era…?' Você diz que não."
+8. **A indústria adulta** — Dinheiro < 0, Beleza ≥ 3, Juízo baixo. A piada é Hollywood, não a pessoa.
+9. **O Civil** — largou tudo. "Hoje dá aula em Ohio e é feliz. Sério." Achievement *Saiu enquanto podia*.
 
 ---
 
-## 7. Finais (lista mestra, 40+)
-
-Cada final tem: nome, manchete estilo *Variety*, ícone, condição, raridade (%) e uma frase para o card.
+## 9. Finais (40+)
 
 | Categoria | Finais |
 |---|---|
-| **Glória** | EGOT · Oscar honorário · "O(a) maior da geração" · Estátua de cera (versão que não parece com você) · Estrela na calçada (ao lado de um cachorro famoso) |
-| **Dinheiro** | Bilionário(a) da tequila · Rei/Rainha da franquia · Produtor(a) poderoso(a) · Dono(a) de time de futebol galês |
-| **Reinvenção** | Diretor(a) premiado(a) · Governador(a) · Broadway · Voz do guaxinim · Rei/Rainha do Natal · Showrunner · Dublador(a) de videogame · Jurado(a) de reality · Podcast de 4h |
-| **Queda** | OD (Realista) · Pelado(a) na Sunset · Preso(a) (fraude fiscal / dirigir bêbado / "o incidente do iate") · Processo bilionário com ex · Esquecido(a) · Ex-estrela de sitcom (indústria adulta) · Infomercial de travesseiro · Vende curso de atuação online · Cameo por $40 |
+| **Glória** | EGOT · Oscar honorário · "O(a) maior da geração" · Estátua de cera (que não parece com você) · Estrela na calçada ao lado de um cachorro famoso |
+| **Dinheiro** | Bilionário(a) da tequila · Rei/Rainha da franquia · Produtor(a) poderoso(a) · Dono(a) de time galês |
+| **Reinvenção** | Diretor(a) premiado(a) · Governador(a) · Broadway · A voz do guaxinim · Rei/Rainha do Natal (47 filmes) · Showrunner · Jurado(a) de reality · Podcast de 4h |
+| **Queda** | OD (Realista) · Pelado(a) na Sunset · Preso(a) (fraude fiscal / "o incidente do iate") · Processo bilionário com ex · Esquecido(a) · "Ex-estrela de sitcom" (título do documentário) · Infomercial de travesseiro · Curso de atuação online · Cameo por $40 |
 | **Culto** | Porta-voz em cruzeiro · Fugiu e escreveu livro · Nível máximo |
-| **Humano** | Professor(a) em Ohio · Fazenda de alpacas sóbrio(a) · Avô/avó que "fez uns filmes" · Morreu de velhice numa casa cheia de gente (o final bom de verdade) |
+| **Humano** | Professor(a) em Ohio · Fazenda de alpacas, sóbrio(a) · Avô/avó que "fez uns filmes" · Morreu de velhice numa casa cheia de gente |
 | **Meme** | O tapa · O discurso de 11 minutos · A foto do tapete vermelho que virou reação · "Aquele ator do GIF" |
-| **Secretos** | Comeback aos 70 ("a Brendanaissance") · Nunca lançou nada e ficou famoso mesmo assim · Morreu no Ato I e virou lenda ("o que teria sido") · Foi substituído(a) por IA e processou (venceu/perdeu) |
+| **Secretos** | Comeback aos 70 · Nunca lançou nada e ficou famoso · Morreu no Ato I e virou lenda · Substituído(a) por IA e processou · **Carreira idêntica a uma real** ("você fez exatamente a filmografia de Nicolas Cage. Parabéns?") |
 
-**Como escolher o final**: cada final declara um vetor-alvo nos medidores + flags obrigatórias. No fim da run, calcule a distância; o mais próximo vence; empates decididos por flags e sorte. Finais raros têm peso para aparecer quando elegíveis (todo mundo quer destravar os secretos).
-
----
-
-## 8. O card final (o produto compartilhável)
-
-Opções de formato (fazer os 3 no longo prazo; MVP: o primeiro):
-
-1. **Pôster de filme biográfico** — título gerado ("*ESTRELA CADENTE: A história de [nome]*"), tagline do final, "baseado em fatos reais", críticas falsas ("★★★★ — 'Doloroso.' Variety"), tarja de classificação com os seus vícios.
-2. **Página de obituário/Wikipedia** — "foi um(a) ator(atriz) americano(a) conhecido(a) por…", filmografia gerada, prêmios, casamentos (com durações), patrimônio, causa da saída de cena.
-3. **Grade de emojis estilo Wordle** — 25 quadradinhos, um por decisão: 🟩 hit 🟥 flop 🟪 prêmio 🟨 escândalo ⬛ reabilitação 💀 — para colar no Twitter sem imagem.
-
-Elementos obrigatórios:
-- Nome do final em letras grandes + manchete.
-- **Filmografia procedural** (ver 9.2) com nota tipo "tomate".
-- Os 5 atributos iniciais (para o amigo dizer "claro que deu errado, você botou 1 em Juízo").
-- 3 "momentos-chave" escolhidos pelo jogo (as decisões de maior impacto).
-- Conquistas (badges).
-- Raridade: "4,1% dos jogadores terminaram assim".
-- Seed/código para "jogar a mesma vida" (desafio: "consegue salvar essa carreira?").
+Seleção: cada final declara um vetor-alvo + flags; menor distância vence; raros têm peso extra quando elegíveis.
 
 ---
 
-## 9. Geradores procedurais
+## 10. O card final
 
-### 9.1 Nome artístico
-Lista de primeiros nomes por década de nascimento + sobrenomes "de Hollywood". Opção de "o estúdio troca seu nome" (era 50).
+Formatos (MVP: o primeiro):
+1. **Pôster de biopic** — "*ESTRELA CADENTE: a história de [nome]*", tagline do final, críticas falsas.
+2. **Página de obituário/Wikipedia** — "foi um(a) ator(atriz) conhecido(a) por…", filmografia real alternativa.
+3. **Grade de emojis estilo Wordle** — 🟩 hit 🟥 flop 🟪 prêmio 🟨 escândalo ⬛ reabilitação 💀.
 
-### 9.2 Títulos de filme (por gênero)
-- Drama indie: `O [Último|Primeiro] [Verão|Inverno] em [Montauk|Marfa|Duluth]`, `[Substantivo abstrato] para [Nome próprio]`
-- Franquia: `[Nome de herói]: [A Era|O Legado|A Ascensão] de [Substantivo]` + numeral romano
-- Terror elevado: palavra única: `Herança`, `Ninho`, `Sal`
-- Natal: `Um Natal em [cidade pequena]`, `O Noivo do Natal`
-- Isca de Oscar: `[Sobrenome do biografado]` ou `A Teoria de [Coisa]`
-- Ação: `Velocidade [Adjetivo]`, `[Verbo no imperativo] ou Morra`
-- Comédia do humorista: `[Nome]: O [Profissão]` filmado no Havaí
-
-### 9.3 Manchetes de tabloide
-Templates com slots: `"[NOME] VISTO(A) SAINDO DE [LUGAR] COM [PESSOA]"`, `"O QUE ACONTECEU COM O ROSTO DE [NOME]?"`, `"FONTES: [NOME] É 'IMPOSSÍVEL' NO SET"`.
-
-### 9.4 Rede de pessoas
-Arquétipos são instanciados com variações (gênero, nacionalidade, década) e **nome descritivo persistente** ("o diretor dos 97 takes"). Reaparecem em eventos posteriores: "O diretor dos 97 takes te quer de novo. Ele diz que mudou."
+Obrigatório no card:
+- Nome do final + manchete estilo *Variety*.
+- **Filmografia alternativa**: `1997 · Titanic · no papel de Kate Winslet · indicada` — texto, sem pôster.
+- **Os 3 "recusei X para fazer Y"** mais dolorosos da run (o jogo escolhe pela diferença de resultado).
+- Os 5 atributos iniciais ("claro que deu errado, você botou 1 em Juízo").
+- Conquistas; raridade do final; seed para "jogue a mesma vida".
+- Rodapé: "Dados: TMDB. Fan-made. Não afiliado."
 
 ---
 
-## 10. Mecânicas de viralidade e replay
+## 11. Geradores
 
-- **Desafio diário**: mesma seed para todo mundo (mesmos atributos pré-definidos, mesma fila de eventos). Compare finais com amigos. "Hoje: nepo baby com Juízo 1."
-- **Modo Destino**: comece já num arquétipo pronto ("Ex-criança estrela, 19 anos, $4M, Vício 3. Boa sorte.").
-- **Modo Cenário** (do Volante): "Você é um astro de franquia em 2022 e alguém acabou de fazer piada com sua esposa no palco. Você tem 4 segundos."
-- **Seed compartilhável**: link que reproduz a mesma vida para o amigo tentar "salvar".
-- **Estatísticas globais** no card: "73% de quem aceitou a capa nunca ganhou um prêmio".
-- **Conquistas** (nomes à la Copero): *Sem anel* (nunca indicado), *Um estúdio só*, *Nômade* (7 agentes), *Sobreviveu ao produtor*, *Disse não ao centro*, *A voz*, *Saiu enquanto podia*, *Zero Juízo* (terminou com Juízo 1 e ganhou Oscar), *Brendanaissance*, *Nepo e daí*.
-- **Streak**: dias seguidos jogando o diário.
-- **"Carreira de exemplo"** (do Copero): botão na home que roda uma vida aleatória em 10 segundos, para mostrar o formato antes de o jogador investir.
-
----
-
-## 11. Tom e guia de escrita
-
-- **Voz**: narrador de documentário cansado + manchete de *Variety* + amigo fofoqueiro. Frases curtas. Sempre uma observação cínica no fim.
-- **Nunca nomear** pessoas reais, estúdios, filmes, igrejas. Descrever até o jogador reconhecer, mas com uma pitada de exagero que torna a descrição "ficção".
-- **Humor negro sim, crueldade não**: a piada é sempre sobre Hollywood, o sistema, o ego; nunca sobre a vítima. O produtor dos abraços é vilão; quem trabalhou com ele é personagem com dilema.
-- **OD e suicídio**: só com Modo Realista ligado; texto seco, sem glamour, sem detalhes de método; o card final mostra uma linha discreta de apoio (CVV 188 no Brasil / equivalente por idioma). Não é "fim de jogo engraçado", é "fim de jogo" com um silêncio.
-- **Gênero e idade**: o jogo deixa explícito o duplo padrão (atrizes perdem ofertas aos 40, atores viram "charmoso grisalho") porque é sátira; o jogador pode escolher gênero e sente a diferença.
-- **Idiomas**: PT-BR primeiro, EN logo depois (o formato vive de alcance), ES (o público de Copero).
+- **Nome artístico**: primeiros nomes por década de nascimento + sobrenomes "de Hollywood"; na era 50, "o estúdio troca seu nome".
+- **Descrições às cegas**: escritas à mão por filme/pessoa, em 3 níveis. Guia: 2 frases; 1 fato verificável
+  (Wikipedia, não trivia de IMDb); 1 piada; nunca o título; nunca inventar. Rascunho com LLM, revisão
+  humana obrigatória, checagem de fonte.
+- **Manchetes de tabloide**: `"[NOME] VISTO(A) SAINDO DE [LUGAR] COM [PESSOA FICTÍCIA]"`,
+  `"O QUE ACONTECEU COM O ROSTO DE [NOME]?"`, `"FONTES: [NOME] É 'IMPOSSÍVEL' NO SET"`.
+- **Trívia de revelação**: base de "quem recusou este papel" (Will Smith/Neo, Matt Damon/Avatar,
+  Sean Connery/Gandalf, Michelle Pfeiffer/Clarice, John Travolta/Forrest Gump, Tom Selleck/Indiana
+  Jones, Emily Blunt/Viúva Negra, Molly Ringwald/Uma Linda Mulher). ~200 entradas curadas.
 
 ---
 
-## 12. Lista de eventos para começar (uma amostra de 60)
+## 12. Viralidade e replay
 
-### Ato I (20–25)
-1. O agente do porão: "Um agente com escritório em cima de uma lavanderia quer te representar. Cobra 20%." → aceitar / esperar um melhor [Contatos 3].
-2. Comercial de sanduíche: $12k, Fama +2, Prestígio −1 (vira meme em 15 anos).
-3. Figuração num filme de prestígio: 0 dinheiro, chance de ser notado(a) [Beleza/Talento].
-4. O teste com o diretor que pede "mais pequeno": Talento rola.
-5. O colega de quarto que também é ator e consegue o papel que você queria.
-6. A balada nas colinas (ver 4.3).
-7. "Sorria mais": a executiva sugere mudar seu nome / sotaque / dentes.
-8. Primeiro papel em série adolescente: Fama ++, 6 anos preso(a).
-9. O professor de teatro de 80 anos que só aceita 5 alunos.
-10. Convite para um "centro" (Culto, nível 1).
-11. O amigo que te chama para uma pirâmide de suplementos [Juízo].
-12. Seu pai/mãe se muda para LA "para ajudar".
-
-### Ato II (26–32)
-13. A capa ou o sofá (projeto, ver 5.1).
-14. Co-star caótica: romance?
-15. O diretor dos 97 takes.
-16. O produtor dos abraços te chama para um "café".
-17. Primeiro flop: culpar o diretor na imprensa / assumir / sumir.
-18. Tabloide inventa romance com um músico. Confirmar (Heat ++) / negar / "não comento".
-19. A franquia quer renovar por mais 3 filmes e um parque temático.
-20. O diretor dinamarquês. Festival. Terapia.
-21. Casamento em Vegas (55 horas).
-22. Seu agente some com $2M.
-23. Tweet de 2011 ressurge.
-24. Oferta para apresentar o programa de humor de sábado à noite.
-25. Lesão em set de ação → opioides [Vício].
-26. O filme indie que você fez por nada ganhou em um festival francês.
-27. Convite para um filme de um diretor coreano sobre classes sociais.
-28. Seu colega de sitcom morre.
-
-### Ato III (33–42)
-29. Temporada de prêmios: campanha ou dignidade.
-30. O discurso.
-31. A noite do tapa.
-32. O produtor dos abraços cai. A jornalista liga.
-33. Produzir o próprio filme: hipotecar a casa.
-34. Filhos (ver 4.3).
-35. Divórcio público. Cartas vazam.
-36. Marca de tequila / skincare / cripto.
-37. Culto nível 3: recrutar co-star.
-38. Intervenção dos amigos (se Vício ≥ 6).
-39. Reabilitação em Malibu, 30 dias, $120k.
-40. "O estúdio quer rejuvenescer você digitalmente para o filme 7."
-41. Dirigir o primeiro filme: pequeno drama sobre o seu pai.
-42. O veterano generoso morre. Discurso no funeral.
-43. Convite para ser jurado(a) de reality.
-44. Processo de uma ex-assistente.
-45. Comprar um time de futebol galês com um amigo.
-
-### Ato IV (43–55)
-46. O silêncio: 18 meses sem oferta.
-47. A série de prestígio de domingo à noite.
-48. Filme de Natal nº 1.
-49. "Papel de mãe/pai do protagonista". Aceitar é admitir.
-50. Cirurgia: "o que aconteceu com o rosto de…".
-51. Convite para Broadway: 8 shows por semana, $0, Prestígio +++.
-52. O jovem diretor da internet te quer "ironicamente".
-53. Candidatura a governador.
-54. Memórias: contar tudo (Dinheiro ++, pontes queimadas) / contar nada.
-55. Documentário sobre o culto. Você aparece.
-
-### Ato V (56+)
-56. O comeback: um diretor de prestígio quer você como um lutador decadente / uma professora de piano / um pai moribundo.
-57. Prêmio honorário. Alguém jovem apresenta e erra seu nome.
-58. Cameo por $40 num app.
-59. Seu neto(a) quer ser ator(atriz). Você diz…
-60. Fila da farmácia: "você não era…?"
+- **Desafio diário**: mesma seed (mesmo ano de estreia, atributos pré-definidos, mesmas ofertas).
+  "Hoje: nepo baby de 1989 com Juízo 1."
+- **Modo Destino**: arquétipo pronto ("Ex-criança estrela, 1994, $4M, Vício 3. Boa sorte.").
+- **Modo Cenário** (v2): momento real, pessoa real, camada B ("É 2022. Alguém fez piada com sua
+  esposa no palco. Você tem 4 segundos.").
+- **Seed compartilhável**; **estatísticas globais** ("73% de quem aceitou Thor nunca foi indicado");
+  **conquistas** (*Sem anel*, *Nômade* (7 agentes), *Disse não ao centro*, *A voz*, *Saiu enquanto podia*,
+  *Zero Juízo* (Juízo 1 e ganhou Oscar), *Brendanaissance*, *Nepo e daí*, *Filmografia de Cage*).
+- **"Carreira de exemplo"** na home (roda uma vida em 10 s).
+- **Camada trívia**: cada revelação tem botão "sabia que…" → compartilhável sozinho.
 
 ---
 
-## 13. Arquitetura técnica sugerida (para quando sair do papel)
+## 13. Tom, escrita e limites
 
-- **Stack**: SPA estático (Vite + React ou Svelte), deploy em Cloudflare Pages (como o Volante de Ouro). Zero backend no MVP; estatísticas globais e desafio diário com um Worker + KV depois.
-- **Conteúdo em dados, não em código**: eventos em YAML/JSON com `condições` (ato, idade, atributos, flags, medidores), `peso`, `opções` com `efeitos` (imediato/diferido/permanente/multiplicador/flag) e `texto` por idioma. Escritores mexem no YAML, não no JS.
-- **RNG com seed** (ex.: `seedrandom`) para desafio diário e link de "jogue a mesma vida".
-- **Estado**: máquina simples `criação → ato → card → resolução → próximo` + reducer; salvar em `localStorage`.
-- **Card**: render em `<canvas>` ou `html-to-image` → PNG; share via Web Share API; fallback de copiar texto (grade de emojis).
-- **Esquema de evento (exemplo)**:
+- **Voz**: narrador de documentário cansado + manchete de *Variety* + amigo fofoqueiro.
+- **Real = fatos; fictício = vícios.** Ver 2.7. A piada é sempre sobre Hollywood, nunca sobre a vítima.
+- **OD e suicídio**: só no Modo Realista; texto seco; linha de apoio discreta no card (CVV 188).
+- **Gênero e idade**: duplo padrão explícito porque é sátira; escolha de gênero muda as ofertas (dados
+  reais já fazem isso sozinhos: há menos protagonistas mulheres de 45+ no TMDB, e o jogo mostra).
+- **Idiomas**: PT-BR primeiro; EN logo depois (o material é americano, o alcance é global); ES (público do Copero).
+
+---
+
+## 14. Lista de eventos para começar (amostra)
+
+**Ato I** — agente do porão (20%) · comercial de sanduíche · figuração num filme de prestígio real do ano
+· o teste com o diretor que pede "mais pequeno" · colega de quarto pega o papel · a balada · "sorria mais"
+· primeiro papel em série adolescente real do ano (6 anos preso) · professor de teatro de 80 anos · convite
+para o "centro" · pirâmide de suplementos · pai/mãe se muda para LA.
+
+**Ato II** — a capa ou o sofá (duas ofertas reais) · co-star caótica (fictícia) · o diretor dos 127 takes
+(real) · o produtor do "café" (real, camada B; só o convite para reunião é narrado) · primeiro flop
+· tabloide inventa romance com músico (fictício) · a franquia renova · o diretor dinamarquês · Vegas 55 h
+· agente some com $2M · tweet antigo · apresentar o programa de sábado · lesão → opioides · o indie que
+você fez por nada ganha em festival francês · o diretor coreano · colega de sitcom morre.
+
+**Ato III** — temporada de prêmios contra indicados reais · o discurso · a noite do tapa (card de
+contexto 2022) · o produtor cai (2017) · produzir o próprio filme · filhos · divórcio público · tequila
+· culto nível 3 · intervenção · reabilitação em Malibu · "rejuvenescer digitalmente" · dirigir
+· o veterano morre · jurado(a) de reality · processo de ex-assistente · time galês.
+
+**Ato IV** — 18 meses sem oferta · a série de prestígio de domingo · filme de Natal nº 1 · "papel de
+mãe/pai do protagonista" · cirurgia · Broadway · o jovem diretor da internet te quer "ironicamente"
+· governador · memórias · documentário sobre o culto.
+
+**Ato V** — o comeback (um diretor de prestígio real do ano) · prêmio honorário · cameo por $40
+· revisão histórica (o filme que te deu Razzie virou culto) · neto(a) quer ser ator · fila da farmácia.
+
+---
+
+## 15. Dados e arquitetura
+
+### 15.1 Fontes
+| Dado | Fonte | Observação |
+|---|---|---|
+| Filmes, elenco (ordem), equipe, orçamento, bilheteria, gêneros, imagens | **TMDB API** | Grátis para uso não comercial com atribuição (logo + "This product uses the TMDB API but is not endorsed or certified by TMDB"). Comercial exige licença. |
+| Rotten Tomatoes, Metacritic, IMDb rating | **OMDb API** | Free tier ~1.000 req/dia. Baixar e congelar em JSON; não consultar em runtime. |
+| Oscars (indicados e vencedores por ano) | Dataset público do Academy Awards (Kaggle/GitHub) ou **Wikidata** | Também Globo de Ouro, Cannes, Razzies via Wikidata/Wikipedia. |
+| "Quem recusou o papel", takes, duração de set, produções problemáticas | Curadoria manual (Wikipedia como fonte mínima) | É o conteúdo editorial. ~600 filmes × 3 descrições. |
+| Inflação | CPI anual | Para mostrar cachê "na época / hoje". |
+
+**Pipeline offline**: script Python baixa e normaliza tudo para um `films.json` (~600 filmes curados,
+1975–2025) + `people.json` (~150 diretores, ~100 co-stars) + `awards.json` + `trivia.json`.
+O jogo roda 100% estático, sem chamadas de API em runtime.
+
+### 15.2 Stack
+- SPA estático (Vite + React ou Svelte), Cloudflare Pages (como o Volante). Worker + KV depois para
+  estatísticas globais e desafio diário.
+- RNG com seed (`seedrandom`). Estado: máquina `criação → ato → card → revelação → resolução` + reducer; `localStorage`.
+- Card: `html-to-image` → PNG; Web Share API; fallback de copiar texto.
+
+### 15.3 Esquema de dados (exemplo)
 ```yaml
-id: a_capa_ou_o_sofa
-ato: 2
-peso: 10
-requer: { nao_tem_flag: [contrato_franquia] }
-texto:
-  pt: "Uma diretora que você admira quer você num filme com orçamento de um sofá. ..."
-opcoes:
-  - rotulo: { pt: "O sofá" }
-    efeitos:
-      imediato: { dinheiro: 0, prestigio: +3 }
-      pipeline: { tipo: indie, estreia_em: 2, chance_premio: 0.40, chance_cult: 0.25 }
-  - rotulo: { pt: "A capa" }
-    efeitos:
-      imediato: { dinheiro: +8000000, fama: +15 }
-      flag: [contrato_franquia]
-      pipeline: { tipo: franquia, estreia_em: 1, chance_premio: 0.02, chance_escandalo: 0.15 }
-  - rotulo: { pt: "Fazer os dois" }
-    requer: { contatos: 4 }
-    efeitos:
-      imediato: { estabilidade: -2 }
-      pipeline: [ ... ambos ... ]
+# films.json (um item)
+tmdb_id: 37799
+title: { original: "The Social Network", pt: "A Rede Social" }
+year: 2010
+director: { tmdb_id: 7467, name: "David Fincher" }
+roles:
+  - { actor: "Jesse Eisenberg", order: 0, gender: m, demand: 4, oscar: nominated }
+  - { actor: "Andrew Garfield", order: 1, gender: m, demand: 3, oscar: none }
+  - { actor: "Rooney Mara",     order: 4, gender: f, demand: 2, oscar: none }
+budget: 40000000
+revenue: 224900000
+rt: 96
+metacritic: 95
+film_oscars: { nominations: 8, wins: 3, best_picture: nominated }
+shoot_days: 70
+blind:
+  hard:   { pt: "Um diretor que não faz menos de 50 takes quer você num filme sobre um site. Duas horas de gente digitando e falando rápido." }
+  medium: { pt: "O diretor de um filme sobre um serial killer que nunca é pego, e de outro em que o protagonista envelhece ao contrário, quer você num filme sobre a criação de um site. A cena de abertura vai ter 99 takes." }
+  easy:   { pt: "O Fincher quer você no filme do Facebook. Roteiro do cara que escreve andando." }
+flags: [ roteirista_estrela, filme_de_processo ]
+trivia:
+  - "A cena de abertura foi filmada 99 vezes."
+  - "O roteiro de Aaron Sorkin tem 162 páginas; o filme tem 2 horas."
+revision: null   # ou { year: 2022, text: "...", prestige_delta: +3 }
 ```
-- **MVP (2–3 semanas de conteúdo)**: 1 era, 5 atributos, 3 origens, ~120 eventos, 15 finais, card pôster, share. Depois: desafio diário, eras, modo cenário, EN/ES.
+
+```yaml
+# evento fictício (camada C)
+id: balada_nas_colinas
+ato: [1, 2]
+peso: 8
+requer: { heat: ">=2" }
+texto: { pt: "Depois da festa de Oscar de uma revista, alguém te chama para a continuação nas colinas." }
+opcoes:
+  - rotulo: { pt: "Ir" }
+    rolagem:
+      - { p: 0.25, efeito: { contatos_evento: +1 }, texto: "Você conhece um produtor que lembra de você." }
+      - { p: 0.20, efeito: { flag: amor_da_vida }, texto: "Você conhece alguém que não é da indústria." }
+      - { p: 0.20, efeito: { vicio: +2 },           texto: "Você conhece outra coisa." }
+      - { p: 0.10, efeito: { flag: culto_1 },        texto: "Alguém te fala de um 'centro'." }
+      - { p: 0.10, efeito: { heat: +2, flag: foto },  texto: "Uma foto vaza." }
+      - { p: 0.15, efeito: {},                       texto: "Você segura um copo por 2 horas." }
+  - rotulo: { pt: "Não ir" }
+    efeito: { estabilidade: +1 }
+  - rotulo: { pt: "Ir e sair cedo" }
+    requer: { juizo: 3 }
+    efeito: { contatos_evento: +1 }
+```
+
+### 15.4 MVP (escopo)
+- 1 janela de estreia (1990–1995), 5 atributos, 3 origens.
+- **200 filmes curados** (1991–2025) com 3 descrições cada; 40 diretores; 100 eventos fictícios; 15 finais.
+- Card pôster + share. Sem backend.
+- Depois: 600 filmes, 1975–2025, desafio diário, estatísticas globais, revisão histórica, EN/ES, modo cenário.
 
 ---
 
-## 14. Perguntas em aberto (decidir antes de codar)
+## 16. Perguntas em aberto
 
-1. **Swipe binário (Reigns) ou 2–3 botões?** Swipe é mais viral no celular; botões permitem a 3ª opção de atributo. Proposta: swipe + a 3ª opção como "puxar para cima".
-2. **Probabilidade visível em tudo ou só em projetos?** Proposta acima: projetos sim, vida não.
-3. **Morte no padrão ou só no Modo Realista?** Proposta: Realista desligado por padrão, mas o card final mostra "você jogou no modo seguro" para provocar.
-4. **Quão explícito ser nos arquétipos?** Quanto mais reconhecível, mais viral e mais risco. Regra: descrever traços públicos e notórios, exagerar um grau, nunca nomear, nunca inventar crime novo para alguém identificável.
-5. **Nome do jogo**: *Estrela Cadente* · *Tapete Vermelho* · *Agradeço à Academia* · *Sunset* · *Baseado em Fatos Reais* · *Ex-Estrela*.
+1. **Swipe ou botões?** Swipe é mais viral no celular; botões permitem a 3ª opção. Proposta: swipe + "puxar para cima".
+2. **Quanto ruído nas probabilidades?** Dados reais exatos matam a surpresa. Proposta: ±15 pontos.
+3. **Pôsteres do TMDB dentro do jogo?** Prática comum com atribuição, mas direito é do estúdio. Proposta: sim no jogo, nunca no card.
+4. **Produtor condenado: nomear ou não?** Camada B diz sim, com fatos. Proposta: nomear na revelação e no card de 2017; nunca narrar o "café" com detalhes inventados.
+5. **Ator original no card**: "no papel de Kate Winslet" é o gancho; algum ator vivo pode não gostar. Risco baixo (fato de obra), mas decidir.
+6. **Nome do jogo**: *Estrela Cadente* · *Agradeço à Academia* · *Baseado em Fatos Reais* · *No Papel De* · *Recusei Titanic*.
