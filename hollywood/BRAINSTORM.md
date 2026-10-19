@@ -173,13 +173,64 @@ obra e fatos públicos, e tudo que circulou como rumor entra **marcado como rumo
 | **Fato de obra** (filme, papel, bilheteria, crítica, prêmio, takes, duração de set, quem recusou) | Direto, sem ressalva | "A cena de abertura teve 99 takes." |
 | **Fato público sobre a pessoa** (condenação, feudo público, declaração, o tapa, falência) | Direto, com data | "Em 2020 e 2022 o produtor foi condenado." |
 | **Rumor / fofoca / 'fontes'** (set problemático, briga de bastidor, romance, hábito) | Sempre com etiqueta: *"dizem que"*, *"segundo o tabloide"*, *"rumor nunca confirmado"*, ou uma tag visual 🗞️ RUMOR | "🗞️ Dizem que ele chegou 4 horas atrasado todos os dias. Ele nega." |
-| **Vício, sexo e crime que o jogo inventa para a SUA história** | Acontece com você e com personagens fictícios (anfitrião da festa, agente, guru, o amor da sua vida); a pessoa real pode estar na mesma festa, mas não é ela que te oferece nada | "Na festa de um astro de franquia de carros, alguém que você não conhece te oferece outra coisa." |
+| **Vício, sexo e crime que acontecem com VOCÊ** | Com personagens fictícios de **nome caricato**, em circunstâncias que **copiam um caso real famoso**. Na resolução, o jogo revela: *"Aconteceu de verdade com Winona Ryder, 2001."* | "No bangalô 3 de um hotel na Sunset, Chip Marmont te oferece uma mistura que ele chama de speedball." → revelação: *John Belushi, Chateau Marmont, 1982.* |
 
 Regras práticas:
-- Co-stars reais são colegas de cena, com fatos e rumores etiquetados. Romance e casamento dentro do jogo são com personagens fictícios (romance real inventado não é rumor, é invenção, e também é menos engraçado que "você casou com um baterista em Vegas por 55 horas").
+- Co-stars reais são colegas de cena, com fatos e rumores etiquetados. Romance, casamento e vício dentro do jogo são com personagens fictícios, porque romance real inventado não é rumor, é invenção.
 - A tag 🗞️ RUMOR vira elemento de interface: Carisma alto "ouve mais rumores" antes de escolher (mais informação, de qualidade duvidosa). Rumor pode estar errado: 20% dos rumores do jogo são falsos e a revelação diz "o rumor era mentira".
 - Disclaimer curto na home e no card: fan-made, sátira, não afiliado, dados do TMDB/OMDb.
 - Pôsteres: uso dentro do jogo com atribuição ao TMDB; no card compartilhável, só texto e tipografia própria, porque pôster é do estúdio e o card vai circular fora do jogo.
+
+#### 2.7.1 Eventos fictícios que ecoam casos reais
+O que dispara a memória do jogador não é o nome, é a **circunstância**: a fita que some da casa, a loja de luxo em Beverly Hills, o bangalô do hotel. Então todo evento de vício, sexo, crime ou surto segue três regras:
+
+1. **A circunstância é copiada de um caso real famoso**, com detalhes reconhecíveis (lugar, valor, objeto, frase).
+2. **Os personagens envolvidos são fictícios com nome caricato**: ou trocadilho com o original (*Keith Brilhante*, *Heidi Flash*, *Dr. Bem-Estar*), ou nome "de Hollywood" com cheiro de época (*Chip Marmont*, *Candy Vermont*, *Sal Tubarão*, *Tommy Lixo*).
+3. **A resolução revela o caso real**: uma linha *"Aconteceu de verdade com [pessoa], [ano], [lugar]"*, com link para o verbete. É trívia, é piada e é a prova de que o jogo não inventou nada.
+
+Banco inicial de casos (todos públicos e amplamente documentados; expandir para ~80):
+
+| Caso real | Evento no jogo (circunstância copiada) | Personagem fictício | Medidor |
+|---|---|---|---|
+| Pamela Anderson e Tommy Lee: fita roubada do cofre da casa durante uma reforma (1995) | "Durante a reforma, um eletricista leva o cofre. Dentro, uma fita." Opções: processar / ignorar / "lançar você mesmo" | *Tommy Lixo*, baterista de metal; *Rand, o eletricista* | Heat +5, Estabilidade −3, Bagagem |
+| Winona Ryder: furto de US$ 5,5 mil em roupas na Saks de Beverly Hills (2001) | "Você sai de uma loja de luxo em Beverly Hills com US$ 5 mil em roupas e etiquetas cortadas na bolsa." | *Seguranças da Sacks* | Fama +, Prestígio −, pausa de 2 anos nas ofertas |
+| John Belushi: speedball no bangalô 3 do Chateau Marmont (1982) | "Bangalô 3. Chip Marmont te oferece uma mistura." [Juízo] | *Chip Marmont*, anfitrião eterno | Vício +3; Modo Realista: 15% OD |
+| River Phoenix: overdose na calçada do Viper Room (1993) | "Na porta de um clube na Sunset, de madrugada, com um amigo músico." | *Johnny Víbora*, dono do clube | Modo Realista: OD |
+| Robert Downey Jr.: preso em 1996 e encontrado dormindo na cama de um vizinho (1996) | "Você acorda na cama de uma casa que não é sua. A família está olhando." | *Os Vizinhos de Malibu* | Vício +2, Heat +3, flag `preso_1` |
+| Hugh Grant: preso com uma profissional do sexo num carro na Sunset Blvd (1995) | "Carro estacionado na Sunset, 1h da manhã. Luz azul no retrovisor." | *Divina Marrom* | Heat +5; [Carisma 4] vira piada no late show e Fama ++ |
+| Heidi Fleiss: a agenda da "madame de Hollywood" (1993) | "Uma agenda com nomes vaza. O seu está nela." | *Heidi Flash* | Bagagem; 🗞️ RUMOR para os outros nomes |
+| Rob Lowe: fita com uma menor durante a convenção democrata em Atlanta (1988) | "Uma fita gravada num hotel durante uma convenção política." | *Festa da Convenção* | Bagagem forte, Prestígio −−; comeback só via comédia de TV |
+| Charlie Sheen: "tiger blood", demitido da sitcom mais paga da TV (2011) | "Você dá uma entrevista de 40 minutos sobre o seu sangue. É demitido(a) da série mais bem paga da TV." | *Dr. Bem-Estar* (médico das celebridades) | Vício +3, Fama +10, Dinheiro −−, flag `demitido_sitcom` |
+| Lindsay Lohan: tornozeleira, tribunal, reabilitações (2007–2013) | "Sua terceira audiência do ano. A juíza conhece seu nome." | *Juíza Sauer-Mente* | Vício, Bagagem, caminho da Espiral |
+| Mel Gibson: DUI e discurso antissemita gravado pela polícia (2006) | "Parado(a) por dirigir bêbado(a), você diz coisas que a gravação registra." | *Policial de Malibu* | Cancelado por 10 anos, comeback via direção |
+| Wesley Snipes: prisão por sonegação (2010) | "Seu guru fiscal explica que imposto de renda é 'voluntário'." [Juízo] | *Eddie Isento*, consultor | Dinheiro −−, 3 anos preso, flag `preso_fiscal` |
+| Nicolas Cage: crânio de dinossauro, castelos, dívida com o fisco | "Um leilão. Um crânio de dinossauro. Você levanta a mão." | *Leiloeiro Sotheby Falso* | Dinheiro −−, flag `filmografia_de_cage` (aceita tudo para pagar) |
+| Kim Basinger: comprou uma cidade na Geórgia e faliu (1989/1993) | "Uma cidade inteira está à venda por US$ 20 milhões." | *Prefeito de Braselton* | Dinheiro −− |
+| Martin Lawrence: surto no meio da Ventura Blvd com uma arma, gritando (1996) | "Você está no meio da avenida, gritando. Há uma arma. Há um helicóptero." | *Helicóptero do Canal 7* | Estabilidade 0 → caminho "pelado na rua" |
+| Anne Heche: bateu na porta de uma casa em Fresno dizendo que ia para a nave (2000) | "Você bate na porta de uma casa no interior e pede para esperar a nave." | *Família de Fresno* | Estabilidade −−, Heat + |
+| Randy Quaid: fugiu para o Canadá fugindo dos "star whackers" (2010) | "Você conclui que há um grupo matando astros e foge para o Canadá." | *Os Star Whackers* | Final secreto "Refúgio no Canadá" |
+| Shia LaBeouf: saco de papel "I AM NOT FAMOUS ANYMORE" no tapete vermelho (2014) | "Você vai à première com um saco de papel na cabeça." | — | Heat +3, Prestígio ±, flag `performance_art` |
+| Joaquin Phoenix: carreira falsa de rapper e documentário (2009–2010) | "Você anuncia que largou o cinema para ser rapper. É sério? Nem você sabe." | *Casey, o cunhado com a câmera* | Fama +, Prestígio − por 2 anos, depois ++ |
+| Christian Bale: áudio gritando com o diretor de fotografia no set (2009) | "Alguém mexe na luz durante sua cena. Você grita por 4 minutos. Há áudio." | *Shane, o iluminador* | Reputação na indústria −2, Heat + |
+| Russell Crowe: telefone arremessado no funcionário do hotel (2005) | "O telefone do hotel não liga para sua casa. Você arremessa o telefone." | *Nestor, da recepção* | Reputação −1, Heat +2 |
+| Zsa Zsa Gabor: tapa num policial de Beverly Hills (1989) | "O policial pede a carteira. Você dá um tapa." | *Policial Kramer* | Fama +, 3 dias de cadeia, flag meme |
+| Reese Witherspoon: "você sabe quem eu sou?" na blitz (2013) | "Seu marido é parado na blitz. Você sai do carro e pergunta se o policial sabe quem você é." | *Policial de Atlanta* | Heat +, [Carisma 4] vira piada e Fama + |
+| Lori Loughlin e Felicity Huffman: suborno para filhos entrarem na universidade (2019) | "Um consultor garante vaga para sua filha como remadora. Ela nunca remou." [Juízo] | *Rick Cantor*, consultor | Preso(a) 2 meses, Cancelado |
+| Allison Mack e NXIVM: grupo de autoajuda que marcava mulheres a ferro (2018) | "O grupo de autoconhecimento tem um nível secreto. Há uma cerimônia." | *Keith Brilhante*, guru | Caminho do Culto, final "Presa pelo culto" |
+| Tom Cruise: pulo no sofá da Oprah (2005) | "Num talk show, você está tão apaixonado(a) que sobe no sofá." | *Apresentadora de Chicago* | Fama +5, Prestígio −2, meme eterno |
+| Dustin Diamond (o Screech): fita íntima lançada pelo próprio ex-astro de sitcom (2006) | "Seu dinheiro acabou. Um empresário sugere 'lançar uma fita'." | *Sal Tubarão*, empresário | Caminho da indústria adulta |
+| Drew Barrymore: reabilitação aos 13 (1989) | Origem *ex-criança estrela*: "Você tem 13 anos e já conhece a clínica." | *Clínica de Malibu* | Vício inicial 2, Estabilidade inicial −1 |
+| Macaulay Culkin / Gary Coleman: pais gastaram o dinheiro; processo (1990s) | "Você descobre que a conta está vazia. Seus pais explicam." | *Papai Empresário* | Dinheiro −−, Estabilidade −2 |
+| Jared Leto: "presentes" de método para o elenco (2016) | "Um co-star 'de método' manda um rato morto para o seu trailer." | *Jordan Catalano Jr.* | Estabilidade −1, 🗞️ RUMOR |
+| Nick Nolte: a foto da prisão por dirigir sob efeito de GHB (2002) | "Sua foto de prisão vira a mais famosa da década." | — | Heat +4, meme eterno |
+| Brendan Fraser: anos sumido, volta e ganha o Oscar (2023) | Ato V: "Você passou 10 anos fora. Um diretor te quer num papel de 270 kg." | — | Final "Comeback aos 50" |
+
+Esquema do evento fictício ganha um campo:
+```yaml
+baseado_em:
+  - { quem: "Winona Ryder", ano: 2001, o_que: "Furto de US$ 5.500 em roupas na Saks de Beverly Hills", link: "https://pt.wikipedia.org/wiki/Winona_Ryder" }
+```
+A revelação mostra esse bloco embaixo da resolução, com a mesma tipografia da revelação dos filmes.
 
 ### 2.8 Mais exemplos de descrição → revelação (para calibrar o tom)
 
@@ -294,7 +345,7 @@ guaxinim numa franquia espacial" (Guardiões da Galáxia, 2014, papel de Bradley
   co-star caótica, guru, o veterano generoso, o amor da sua vida. Instanciadas com variações e nome
   descritivo persistente ("o agente da lavanderia").
 
-### 6.3 Vida pessoal (personagens fictícios, cenário real)
+### 6.3 Vida pessoal (personagens fictícios de nome caricato, circunstâncias copiadas de casos reais; ver 2.7.1)
 - **A balada**: "Depois da festa de Oscar de uma revista, alguém te chama para a continuação nas colinas."
   Ir / não ir / ir e sair cedo [Juízo 3]. Rolagem: conhece produtor (Contatos +), conhece o amor da sua
   vida, conhece cocaína (Vício +2), conhece um guru, foto vaza, nada acontece e você segura um copo 2h.
@@ -506,7 +557,9 @@ id: balada_nas_colinas
 ato: [1, 2]
 peso: 8
 requer: { heat: ">=2" }
-texto: { pt: "Depois da festa de Oscar de uma revista, alguém te chama para a continuação nas colinas." }
+texto: { pt: "Depois da festa de Oscar de uma revista, Chip Marmont te chama para a continuação no bangalô 3." }
+baseado_em:
+  - { quem: "John Belushi", ano: 1982, o_que: "Overdose no bangalô 3 do Chateau Marmont" }
 opcoes:
   - rotulo: { pt: "Ir" }
     rolagem:
@@ -538,6 +591,7 @@ idiomas, stack, duração da run, features da v1, divisão de trabalho) estão n
 editável fora deste arquivo. As respostas serão consolidadas aqui numa seção **17. Decisões tomadas**.
 
 Decidido até agora:
-- **Pessoas reais**: fato direto, rumor etiquetado, invenção só com fictícios (2.7). Sem medo de processo.
+- **Pessoas reais**: fato direto, rumor etiquetado (2.7). Sem medo de processo.
+- **Vício, sexo e crime**: personagens fictícios de nome caricato, circunstâncias copiadas de casos reais, revelação "aconteceu de verdade com…" (2.7.1).
 - **Atributos revelam informação** e atravessam áreas (Contatos → nome do diretor; Juízo → sinais de alerta; Carisma → rumores; Talento → roteiro).
 - **Filmes e pessoas reais**, revelados depois da escolha, com "o que você recusou" no card.
