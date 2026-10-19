@@ -173,7 +173,7 @@ obra e fatos públicos, e tudo que circulou como rumor entra **marcado como rumo
 | **Fato de obra** (filme, papel, bilheteria, crítica, prêmio, takes, duração de set, quem recusou) | Direto, sem ressalva | "A cena de abertura teve 99 takes." |
 | **Fato público sobre a pessoa** (condenação, feudo público, declaração, o tapa, falência) | Direto, com data | "Em 2020 e 2022 o produtor foi condenado." |
 | **Rumor / fofoca / 'fontes'** (set problemático, briga de bastidor, romance, hábito) | Sempre com etiqueta: *"dizem que"*, *"segundo o tabloide"*, *"rumor nunca confirmado"*, ou uma tag visual 🗞️ RUMOR | "🗞️ Dizem que ele chegou 4 horas atrasado todos os dias. Ele nega." |
-| **Vício, sexo e crime que acontecem com VOCÊ** | Com personagens fictícios de **nome caricato**, em circunstâncias que **copiam um caso real famoso**. Na resolução, o jogo revela: *"Aconteceu de verdade com Winona Ryder, 2001."* | "No bangalô 3 de um hotel na Sunset, Chip Marmont te oferece uma mistura que ele chama de speedball." → revelação: *John Belushi, Chateau Marmont, 1982.* |
+| **Vício, sexo e crime que acontecem com VOCÊ** | Com personagens fictícios de **nome caricato**, em circunstâncias que **remetem a um caso real famoso**. O jogo **não nomeia** o caso: a circunstância faz lembrar, e quem reconhece, reconhece. | "No bangalô 3 de um hotel na Sunset, Chip Marmont te oferece uma mistura que ele chama de speedball." |
 
 Regras práticas:
 - Co-stars reais são colegas de cena, com fatos e rumores etiquetados. Romance, casamento e vício dentro do jogo são com personagens fictícios, porque romance real inventado não é rumor, é invenção.
@@ -186,9 +186,9 @@ O que dispara a memória do jogador não é o nome, é a **circunstância**: a f
 
 1. **A circunstância é copiada de um caso real famoso**, com detalhes reconhecíveis (lugar, valor, objeto, frase).
 2. **Os personagens envolvidos são fictícios com nome caricato**: ou trocadilho com o original (*Keith Brilhante*, *Heidi Flash*, *Dr. Bem-Estar*), ou nome "de Hollywood" com cheiro de época (*Chip Marmont*, *Candy Vermont*, *Sal Tubarão*, *Tommy Lixo*).
-3. **A resolução revela o caso real**: uma linha *"Aconteceu de verdade com [pessoa], [ano], [lugar]"*, com link para o verbete. É trívia, é piada e é a prova de que o jogo não inventou nada.
+3. **O jogo não nomeia o caso.** Nada de "aconteceu de verdade com X". A referência fica implícita, no máximo com uma etiqueta genérica *"inspirado em fatos reais"* no rodapé do card, sem nome. O reconhecimento é o prêmio do jogador, e explicar a piada mata a piada. (A coluna "Caso real" da tabela abaixo é referência interna para quem escreve, não texto de jogo.)
 
-Banco inicial de casos (todos públicos e amplamente documentados; expandir para ~80):
+Banco inicial de casos para os escritores (todos públicos e amplamente documentados; expandir para ~80). A coluna "Caso real" nunca aparece no jogo:
 
 | Caso real | Evento no jogo (circunstância copiada) | Personagem fictício | Medidor |
 |---|---|---|---|
@@ -225,12 +225,12 @@ Banco inicial de casos (todos públicos e amplamente documentados; expandir para
 | Nick Nolte: a foto da prisão por dirigir sob efeito de GHB (2002) | "Sua foto de prisão vira a mais famosa da década." | — | Heat +4, meme eterno |
 | Brendan Fraser: anos sumido, volta e ganha o Oscar (2023) | Ato V: "Você passou 10 anos fora. Um diretor te quer num papel de 270 kg." | — | Final "Comeback aos 50" |
 
-Esquema do evento fictício ganha um campo:
+Esquema do evento fictício ganha um campo **interno**, nunca renderizado:
 ```yaml
-baseado_em:
-  - { quem: "Winona Ryder", ano: 2001, o_que: "Furto de US$ 5.500 em roupas na Saks de Beverly Hills", link: "https://pt.wikipedia.org/wiki/Winona_Ryder" }
+inspirado_em:   # metadado editorial; não aparece no jogo
+  - { quem: "Winona Ryder", ano: 2001, o_que: "Furto de US$ 5.500 em roupas na Saks de Beverly Hills" }
 ```
-A revelação mostra esse bloco embaixo da resolução, com a mesma tipografia da revelação dos filmes.
+Serve para os escritores não repetirem caso, para checar que a circunstância está fiel, e para uma eventual página "créditos" fora do jogo.
 
 ### 2.8 Mais exemplos de descrição → revelação (para calibrar o tom)
 
@@ -558,7 +558,7 @@ ato: [1, 2]
 peso: 8
 requer: { heat: ">=2" }
 texto: { pt: "Depois da festa de Oscar de uma revista, Chip Marmont te chama para a continuação no bangalô 3." }
-baseado_em:
+inspirado_em:   # interno, não renderizado
   - { quem: "John Belushi", ano: 1982, o_que: "Overdose no bangalô 3 do Chateau Marmont" }
 opcoes:
   - rotulo: { pt: "Ir" }
@@ -592,6 +592,6 @@ editável fora deste arquivo. As respostas serão consolidadas aqui numa seção
 
 Decidido até agora:
 - **Pessoas reais**: fato direto, rumor etiquetado (2.7). Sem medo de processo.
-- **Vício, sexo e crime**: personagens fictícios de nome caricato, circunstâncias copiadas de casos reais, revelação "aconteceu de verdade com…" (2.7.1).
+- **Vício, sexo e crime**: personagens fictícios de nome caricato, circunstâncias que remetem a casos reais, **sem nomear** o caso (2.7.1).
 - **Atributos revelam informação** e atravessam áreas (Contatos → nome do diretor; Juízo → sinais de alerta; Carisma → rumores; Talento → roteiro).
 - **Filmes e pessoas reais**, revelados depois da escolha, com "o que você recusou" no card.
