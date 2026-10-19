@@ -584,14 +584,33 @@ opcoes:
 
 ---
 
-## 16. Decisões em aberto
+## 16. Decisões tomadas (questionário de 19/10/2026)
 
-As perguntas abertas (interação, ruído nas probabilidades, pôsteres, nome, janela de anos do MVP,
-idiomas, stack, duração da run, features da v1, divisão de trabalho) estão num questionário
-editável fora deste arquivo. As respostas serão consolidadas aqui numa seção **17. Decisões tomadas**.
+| Tema | Decisão | Observação do criador |
+|---|---|---|
+| **Nome** | **Agradeço à Academia** | |
+| **Interação** | Swipe esquerda/direita + puxar para cima para a 3ª opção de atributo | Onboarding estilo Tinder: ao começar o movimento, o jogador já entende o que vai acontecer (preview do destino do swipe). |
+| **Ruído nas probabilidades** | ±15 pontos | |
+| **Pôsteres do TMDB** | No jogo **e** no card | |
+| **Janela de estreia** | Dados de 1975 a 2025; ano de estreia escolhível de 1975 até ~2020 | "Tem que pegar 75 até 2020 e pouco." Carreiras que passam de 2026 terminam em "carreira até aqui" ou entram no futuro especulativo marcado. |
+| **Modo Realista (morte)** | **Ligado por padrão** | |
+| **Probabilidades em vida pessoal** | Visíveis só com Juízo ≥ 3 | Precisa de uma explicação clara do que cada atributo faz, logo no começo (tela de criação). |
+| **Idiomas** | PT-BR e EN | Seletor de idioma visível; o jogador escolhe. |
+| **Stack** | React + Vite + TypeScript, estático | |
+| **Duração** | ~25 cards | |
+| **Gênero** | Toggle "Hollywood realista" | Explicar o que o toggle faz: com ele ligado, uma atriz a partir dos 40 precisa ser **muito excepcional** para continuar recebendo ofertas. |
+| **Tom** | Ácido com tudo: OD e suicídio existem como finais, texto seco, linha de apoio discreta no card | |
+| **Nomes caricatos** | Misto, caso a caso | Trocadilho quando a pessoa é o ponto; "cheiro de época" quando o ambiente é o ponto. |
+| **Features da v1** | Card final · "O que você recusou" · Seed compartilhável · Trívia "quem recusou" · Revisão histórica | Ficam para depois: desafio diário, conquistas, grade de emojis, estatísticas globais, modo cenário. |
+| **Primeiro passo** | **Pipeline de dados** (TMDB + OMDb + prêmios → JSON) | |
 
-Decidido até agora:
-- **Pessoas reais**: fato direto, rumor etiquetado (2.7). Sem medo de processo.
+Decididas antes do questionário:
+- **Pessoas reais**: fato direto, rumor etiquetado 🗞️ (2.7). Sem medo de processo.
 - **Vício, sexo e crime**: personagens fictícios de nome caricato, circunstâncias copiadas de casos reais, e a resolução revela "aconteceu de verdade com…" (2.7.1).
-- **Atributos revelam informação** e atravessam áreas (Contatos → nome do diretor; Juízo → sinais de alerta; Carisma → rumores; Talento → roteiro).
-- **Filmes e pessoas reais**, revelados depois da escolha, com "o que você recusou" no card.
+- **Atributos revelam informação** e atravessam áreas (2.3).
+- **Filmes e pessoas reais**, revelados depois da escolha, com "o que você recusou" no card (2.1).
+
+Consequências para o MVP (atualiza a seção 15.4):
+- Curadoria cobre **1975–2025**, não 1991–2025. Meta inicial: 300 filmes (6 por ano), depois 600.
+- Tela de criação ganha um bloco "o que cada atributo faz" com exemplos concretos, e o toggle "Hollywood realista" com texto explicativo.
+- Primeiro swipe de cada run mostra um overlay de tutorial com o destino de cada gesto.
